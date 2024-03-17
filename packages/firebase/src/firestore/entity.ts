@@ -18,14 +18,9 @@ export default class Entity<P extends EntityDefinition<string, any> = EntityDefi
    * @param _name nome do entidade 
    * @param firestore instância do firebase 
    */
-  constructor(private _name: P["provider"], firestore?: Firestore) {
+  constructor(private _name: P["provider"], firestore: Firestore) {
     this._query = new Queries(firestore)
   }
-
-  public setFirestore(firestore: Firestore) {
-    this._query.setFirestore(firestore)
-  }
-
 
   public get name() { return this._name }
 
@@ -101,13 +96,16 @@ export default class Entity<P extends EntityDefinition<string, any> = EntityDefi
     if (!this._query) throw new Error(`firestore must be set at: ${this.name}`,)
     if (!collection || !documentId || !document) return undefined
 
+    const providerName = this._normalizeCollectionName(collection)
+
     const newDoc = {
       ...document,
       id: documentId,
       createdAt: new Date().toDateString(),
       updatedAt: new Date().toDateString()
     } as Op[C]
-    await this._query.processDocumentReferences<typeof document>(this._name, documentId, newDoc)
+
+    await this._query.processDocumentReferences<typeof document>(providerName, documentId, newDoc)
 
     const collectionName = this._normalizeCollectionName(collection)
     return await this._query.setDocument<Op[C]>(

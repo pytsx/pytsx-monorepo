@@ -1,11 +1,10 @@
 import { Firestore, WriteBatch, writeBatch } from "firebase/firestore";
 import { createDocument, deleteDocument, documentArrPush, getCollection, getDocument, getDocumentsWhere, incrementDocumentValue, updateDocument } from "./snippets";
-import { flattenObject } from "../utils";
 import { memoize, clear, Cache, GlobalCache }from "@pytsx/system"
 
 export default class Queries {
   private firestore: Firestore | undefined
-  constructor(firestore?: Firestore) {
+  constructor(firestore: Firestore) {
     if (firestore) {
       this.firestore = firestore
     }
@@ -56,12 +55,11 @@ export default class Queries {
     }
   }
 
-  async updateDocument<D extends Record<string, any>>(collectionName: string, documentId: string, document: D, banch?: WriteBatch) {
+  async updateDocument<D extends Record<string, any>>(collectionName: string, documentId: string, document: D, banch?: WriteBatch): Promise<undefined | void> {
     if (!this.firestore || !collectionName || !documentId || !document) return undefined
     try {
       clear(this, this.getDocument, `${collectionName}:${documentId}`)
-
-      return await updateDocument(this.firestore, collectionName, documentId, flattenObject(document), banch)
+      return await updateDocument(this.firestore, collectionName, documentId, document, banch)
     } catch (error) {
       console.error(`🔴 falha ao -- atualizar documento -- ${document} em ${collectionName}: `, error)
       return undefined
@@ -102,14 +100,15 @@ export default class Queries {
   }
 
   async processDocumentReferences<D extends { [key: string]: any }>(
-    providerName: string,
+    collectionRef: string,
     documentId: string,
     document: D
   ) {
-    if (!this.firestore || !providerName || !documentId || !document) return undefined
+    if (!this.firestore || !collectionRef || !documentId || !document) return undefined
     try {
       // Filtrar os campos que contêm referências
       const fieldsWithReferences = Object.keys(document).filter(el => el.includes("_"));
+
       // Verificar se há campos com referências
       if (fieldsWithReferences.length) {
         // Iniciar uma transação
@@ -117,25 +116,33 @@ export default class Queries {
 
         // Iterar pelos campos com referências usando um loop for...of
         for (let field of fieldsWithReferences) {
-          // Recuperar as referências do campo atual
           /**
-           * Temos uma oportunidade para tipar o document, 
-           * para isso precisamos de um local que armazena e conhece todos os tipos de documento,
-           * é necessário portanto forncecer um contexto global contendo todos os nome com seus respectivos tipos 
-           * dentro de uma variavel global acessivel em um escopo superior 
+           * se o field incluir o valor "child" ("filho") significa que existe uma relação 1 pra muitos. 
+           * Um "filho" possui um "parent" ("pai"), mas um "pai" 1 ou mais "filhos". 
+           * Ou seja, o field possui como valor uma string que será anexada a uma array. 
            */
-          const references = (document as any)[field];
+          const isChild = field.includes("child")
+          /**
+           * "values" possui a(s) referência(s) a serem acessadas e linkadas
+           */
+          const values = (document as any)[field];
+
           // Verificar se as referências são um array e se não estão vazias
-          if (Array.isArray(references) && references.length) {
+          if (Array.isArray(values) && values.length) {
             // Iterar pelas referências e conectar cada uma delas à coleção correspondente
-            for (let ref of references) {
-              await this.pushToDocumentArray(field, ref, `${providerName}_ref`, documentId, batch)
+            for (let ref of values) {
+              await this.pushToDocumentArray(field, ref, `${collectionRef}`, documentId, batch)
             }
           }
-          else if (typeof references == "string") {
-            await this.updateDocument(field, references, {
-              [`${providerName}_ref`]: documentId
-            })
+          else if (typeof values == "string") {
+            if (isChild) {
+              const normalizeField = field.split("_").filter(el => el !== "child").join("_")
+              await this.pushToDocumentArray(normalizeField, values, `${collectionRef}`, documentId, batch)
+            } else {
+              await this.updateDocument(field, values, {
+                [`${collectionRef}`]: documentId
+              })
+            }
           }
         }
 
@@ -143,7 +150,7 @@ export default class Queries {
         await batch.commit() // enviar lote com alterações
       }
     } catch (error) {
-      console.error(`🔴 falha ao -- processar referências do documento -- em ${providerName} -> ${documentId}: `, error)
+      console.error(`🔴 falha ao -- processar referências do documento -- em ${collectionRef} -> ${documentId}: `, error)
       return undefined
     }
   }

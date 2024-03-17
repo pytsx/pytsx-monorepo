@@ -1,4 +1,5 @@
 import { Firestore, Query, WhereFilterOp, WriteBatch, arrayUnion, collection, deleteDoc, doc, getDoc, getDocs, increment, query, setDoc, updateDoc, where } from "firebase/firestore"
+import { flattenObject } from "../utils"
 
 export async function getDocument(firestore: Firestore, collectionName: string, documentName: string) {
   try {
@@ -74,10 +75,12 @@ export async function createDocument(firestore: Firestore, collectionName: strin
 // para objetos animados, usar notação de ponto, ex: document.metadata.category 
 export async function updateDocument(firestore: Firestore, collectionName: string, documentId: string, document: any, banch?: WriteBatch) {
   const ref = doc(firestore, collectionName, documentId)
+  const flattenDoc = flattenObject(document)
+  console.log("[debug] snippet updateDocument() flattenObject --> ", JSON.stringify(flattenDoc))
   if (banch) {
-    banch.set(ref, document)
+    banch.set(ref, flattenDoc)
   } else {
-    return await updateDoc(ref, document)
+    return await updateDoc(ref, flattenDoc)
   }
 }
 
