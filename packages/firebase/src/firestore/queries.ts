@@ -77,7 +77,7 @@ export default class Queries {
     }
   }
 
-  async pushToDocumentArray(collectionName: string, documentId: string, key: string, value: any, batch: WriteBatch) {
+  async pushToDocumentArray(collectionName: string, documentId: string, key: string, value: any, batch?: WriteBatch) {
     if (!this.firestore || !collectionName || !documentId || !key || !value) return undefined
     try {
       clear(this, this.getDocument, `${collectionName}:${documentId}`)
@@ -137,7 +137,7 @@ export default class Queries {
           else if (typeof values == "string") {
             if (isChild) {
               const normalizeField = field.split("_").filter(el => el !== "child").join("_")
-              await this.pushToDocumentArray(normalizeField, values, `${collectionRef}`, documentId, batch)
+              await this.pushToDocumentArray(normalizeField, values, `${collectionRef}`, documentId, undefined)
             } else {
               await this.updateDocument(field, values, {
                 [`${collectionRef}`]: documentId

@@ -56,7 +56,7 @@ export async function documentArrPush(firestore: Firestore, collectionName: stri
   }
 
   if (batch) {
-    batch.set(ref, newValue)
+    batch.set(ref, newValue) // <-- aqui está removendo todas as referências do documento do db?
   } else {
     await updateDoc(ref, newValue)
   }
