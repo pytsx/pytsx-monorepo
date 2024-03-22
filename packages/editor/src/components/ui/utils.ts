@@ -1,6 +1,5 @@
 "use client"
 
-const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 type ColorType =
   | "primary"
@@ -11,17 +10,19 @@ type ColorType =
   | "success"
   | "background"
   | "muted"
+  | "input"
 
-export const colors = (type: ColorType = "primary") => {
+export const colors = (type: ColorType = "primary", mode: "dark" | "light" = "dark") => {
   const colors = {
-    card: prefersDarkMode ? "#0d0d0d" : "#f5f5f5",
+    card: mode == "dark" ? "#0d0d0d" : "#f5f5f5",
     dangerous: "#EA4335",
     primary: "#0066cc",
     secondary: "#1d1d1d",
     warning: "#FBBC05",
     success: "#34A853",
-    background: prefersDarkMode ? "#000000" : "#ffffff",
-    muted: prefersDarkMode ? "#3D3D3D" : "#9d9d9d"
+    background: mode == "dark" ? "#000000" : "#ffffff",
+    muted: mode == "dark" ? "#3D3D3D" : "#9d9d9d",
+    input: mode == "dark" ? "#3D3D3D32" : "#9d9d9d32",
   } as Record<ColorType, string>
 
 

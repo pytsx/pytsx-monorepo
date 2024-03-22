@@ -3,6 +3,7 @@ import React from "react";
 import { SettingsProps } from "./interface";
 import { useEditor } from "../../../../../provider";
 import { AlignVerticalJustifyCenter, ChevronsLeftRightIcon, LucideImageDown } from "lucide-react";
+import { Input } from "../../../../ui/input";
 
 export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
@@ -30,7 +31,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
               %
             </small>
           </div>
-          <input
+          <Input
             type="range"
             onChange={(e) => {
               handleOnChanges({
@@ -68,7 +69,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
               px
             </small>
           </div>
-          <input
+          <Input
             type='range'
             onChange={(e) => {
               handleOnChanges({
@@ -102,7 +103,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
                   state.editor.selectedElement.styles.backgroundColor,
               }}
             />
-            <input
+            <Input
               placeholder="#HFI245"
               className="!border-y-0 rounded-none !border-r-0 mr-2"
               id="backgroundColor"
@@ -121,7 +122,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
                   state.editor.selectedElement.styles.backgroundImage,
               }}
             />
-            <input
+            <Input
               placeholder="url()"
               className="!border-y-0 rounded-none !border-r-0 mr-2"
               id="backgroundImage"

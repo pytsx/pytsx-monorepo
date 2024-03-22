@@ -3,6 +3,7 @@ import React from "react"
 import { SettingsProps } from "./interface";
 import { AlignHorizontalJustifyCenterIcon, AlignHorizontalJustifyEndIcon, AlignHorizontalJustifyStart, AlignHorizontalSpaceAround, AlignHorizontalSpaceBetween, AlignVerticalJustifyCenter, AlignVerticalJustifyStart } from "lucide-react";
 import { useEditor } from "../../../../../provider";
+import { Input } from "../../../../ui/input";
 
 export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
@@ -87,7 +88,7 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <input
+          <Input
             className="h-4 w-4"
             placeholder="px"
             type="checkbox"
@@ -105,7 +106,7 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
         </div>
         <div>
           <label className="text-muted-foreground"> Direction</label>
-          <input
+          <Input
             placeholder="px"
             id="flexDirection"
             onChange={handleOnChanges}

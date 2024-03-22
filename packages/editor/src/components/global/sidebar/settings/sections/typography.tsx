@@ -3,6 +3,7 @@ import React from "react";
 import { useEditor } from "../../../../../provider";
 import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from "lucide-react";
 import { SettingsProps } from "./interface";
+import { Input } from "../../../../ui/input";
 
 
 
@@ -26,7 +27,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
               handleOnChanges({
                 target: {
                   id: 'textAlign',
-                  value: e,
+                  value: e.target.value,
                 },
               })
             }
@@ -36,31 +37,31 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
               value="left"
               className="w-10 h-10 p-0 data-[state=active]:bg-muted"
             >
-              <AlignLeft size={18} />
+              left
             </option>
             <option
               value="right"
               className="w-10 h-10 p-0 data-[state=active]:bg-muted"
             >
-              <AlignRight size={18} />
+              right
             </option>
             <option
               value="center"
               className="w-10 h-10 p-0 data-[state=active]:bg-muted"
             >
-              <AlignCenter size={18} />
+              center
             </option>
             <option
               value="justify"
               className="w-10 h-10 p-0 data-[state=active]:bg-muted "
             >
-              <AlignJustify size={18} />
+              justify
             </option>
           </select>
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-muted-foreground">Font Family</p>
-          <input
+          <Input
             id="DM Sans"
             onChange={handleOnChanges}
             value={state.editor.selectedElement.styles.fontFamily}
@@ -68,7 +69,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
         </div>
         <div className="flex flex-col gap-2">
           <p className="text-muted-foreground">Color</p>
-          <input
+          <Input
             id="color"
             onChange={handleOnChanges}
             value={state.editor.selectedElement.styles.color}
@@ -82,12 +83,11 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
                 handleOnChanges({
                   target: {
                     id: 'font-weight',
-                    value: e,
+                    value: e.target.value,
                   },
                 })
               }
             >
-              <label>Font Weights</label>
               <option value="bold">Bold</option>
               <option value="normal">Regular</option>
               <option value="lighter">Light</option>
@@ -95,7 +95,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
           </div>
           <div>
             <label className="text-muted-foreground">Size</label>
-            <input
+            <Input
               placeholder="px"
               id="fontSize"
               onChange={handleOnChanges}

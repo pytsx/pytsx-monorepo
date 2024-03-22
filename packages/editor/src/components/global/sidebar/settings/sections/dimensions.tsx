@@ -2,6 +2,7 @@
 import React from "react"
 import { SettingsProps } from "./interface"
 import { useEditor } from "../../../../../provider"
+import { Input } from "../../../../ui/input"
 
 
 export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
@@ -22,7 +23,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               <div className="flex gap-4">
                 <div>
                   <label className="text-muted-foreground">Height</label>
-                  <input
+                  <Input
                     id="height"
                     placeholder="px"
                     onChange={handleOnChanges}
@@ -31,7 +32,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 </div>
                 <div>
                   <label className="text-muted-foreground">Width</label>
-                  <input
+                  <Input
                     placeholder="px"
                     id="width"
                     onChange={handleOnChanges}
@@ -45,7 +46,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               <div className="flex gap-4">
                 <div>
                   <label className="text-muted-foreground">Top</label>
-                  <input
+                  <Input
                     id="marginTop"
                     placeholder="px"
                     onChange={handleOnChanges}
@@ -54,7 +55,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 </div>
                 <div>
                   <label className="text-muted-foreground">Bottom</label>
-                  <input
+                  <Input
                     placeholder="px"
                     id="marginBottom"
                     onChange={handleOnChanges}
@@ -65,7 +66,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               <div className="flex gap-4">
                 <div>
                   <label className="text-muted-foreground">Left</label>
-                  <input
+                  <Input
                     placeholder="px"
                     id="marginLeft"
                     onChange={handleOnChanges}
@@ -74,7 +75,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 </div>
                 <div>
                   <label className="text-muted-foreground">Right</label>
-                  <input
+                  <Input
                     placeholder="px"
                     id="marginRight"
                     onChange={handleOnChanges}
@@ -90,7 +91,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               <div className="flex gap-4">
                 <div>
                   <label className="text-muted-foreground">Top</label>
-                  <input
+                  <Input
                     placeholder="px"
                     id="paddingTop"
                     onChange={handleOnChanges}
@@ -99,7 +100,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 </div>
                 <div>
                   <label className="text-muted-foreground">Bottom</label>
-                  <input
+                  <Input
                     placeholder="px"
                     id="paddingBottom"
                     onChange={handleOnChanges}
@@ -110,7 +111,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               <div className="flex gap-4">
                 <div>
                   <label className="text-muted-foreground">Left</label>
-                  <input
+                  <Input
                     placeholder="px"
                     id="paddingLeft"
                     onChange={handleOnChanges}
@@ -119,7 +120,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 </div>
                 <div>
                   <label className="text-muted-foreground">Right</label>
-                  <input
+                  <Input
                     placeholder="px"
                     id="paddingRight"
                     onChange={handleOnChanges}

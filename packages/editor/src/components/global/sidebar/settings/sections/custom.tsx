@@ -1,6 +1,7 @@
 "use client"
 import React from "react";
 import { useEditor } from "../../../../../provider";
+import { Input } from "../../../../ui/input";
 
 export function CustomSettings() {
   const { state, dispatch } = useEditor()
@@ -37,7 +38,7 @@ export function CustomSettings() {
           !Array.isArray(state.editor.selectedElement.content) && (
             <div className="flex flex-col gap-2">
               <p className="text-muted-foreground">Link Path</p>
-              <input
+            <Input
                 id="href"
                 placeholder="https:domain.example.com/pathname"
                 onChange={handleChangeCustomValues}

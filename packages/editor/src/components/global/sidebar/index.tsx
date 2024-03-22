@@ -4,7 +4,7 @@ import React from 'react'
 import ComponentsPlaceholders from '../add-component/components-placeholders'
 import { useEditor } from '../../../provider'
 import { SettingsButton } from './settings/settings-button'
-import { border, colors, size } from '../../ui/utils'
+import { border, colors, size, createScroll } from '../../ui/utils'
 import { Settings } from './settings'
 
 export type SidebarTabs = "settings" | "components"
@@ -19,7 +19,10 @@ export const Sidebar = () => {
         height: "100%",
         borderLeft: border("muted"),
         background: colors("card"),
-        zIndex: 500
+        zIndex: 500,
+        overflowY: "auto",
+        overflowX: "hidden",
+        ...createScroll(),
       }}
     >
       <div
@@ -45,11 +48,11 @@ export const Sidebar = () => {
 
         <section
           style={{
-            width: "20rem",
             zIndex: 100,
             height: "100%",
             transition: "all 75ms ease-in-out",
-            display: state.editor.previewMode ? "none" : "flex"
+            display: state.editor.previewMode ? "none" : "flex",
+            padding: size("md"),
           }}
         >
           <div

@@ -11,7 +11,6 @@ export default function Home() {
   }
   return (
     <main>
-      <ModeToggle />
       <EditorWrapper pageDetails={defaultPage} pageId={defaultPage.id} />
     </main>
   );
