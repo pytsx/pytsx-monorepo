@@ -50,8 +50,17 @@ export type EditorContextProps = {
   dispatch: React.Dispatch<EditorAction>
 }
 
+export type IPage = {
+  id: string
+  title: string
+  description: string
+  visits?: number
+  content?: string
+  updatedAt?: string
+}
+
 export type EditorProviderProps = {
   children: React.ReactNode
   pageId: string
-  pageDetails: any
+  pageDetails: IPage | any
 }

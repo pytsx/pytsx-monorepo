@@ -1,11 +1,12 @@
 "use client"
 import clsx from "clsx";
-import { Trash } from "lucide-react";
 import { v4 } from "uuid"
-import { DeleteComponent } from "./delete-component";
 import { EditorBtns, EditorElement, useEditor } from "../../../provider";
 import React from "react";
 import { Recursive } from "./recursive";
+import { DeleteComponent } from "./delete-component";
+import { Badge } from "../../ui/badge";
+import { size, createScroll } from "../../ui/utils";
 
 export const defaultStyles: React.CSSProperties = {
   backgroundPosition: 'center',
@@ -13,7 +14,8 @@ export const defaultStyles: React.CSSProperties = {
   backgroundRepeat: 'no-repeat',
   textAlign: 'left',
   opacity: '100%',
-  background: "#ffffff10"
+  background: "#1d1d1d32",
+  padding: size("sm")
 }
 
 type Props = { element: EditorElement }
@@ -24,8 +26,9 @@ export function Container({ element }: Props) {
 
   const handleOnDrop = (e: React.DragEvent, type: string) => {
     e.stopPropagation()
-    const componentType = e.dataTransfer.getData('componentType') as EditorBtns
+    if (state.editor.liveMode) return
 
+    const componentType = e.dataTransfer.getData('componentType') as EditorBtns
     switch (componentType) {
       case 'text':
         dispatch({
@@ -54,10 +57,10 @@ export function Container({ element }: Props) {
               content: [],
               id: v4(),
               name: 'Container',
-              styles: { ...defaultStyles },
+              styles: { ...defaultStyles, minHeight: "320px" },
               type: 'container',
             },
-          },
+          }
         })
         break
       case '2Col':
@@ -123,25 +126,50 @@ export function Container({ element }: Props) {
 
   return (
     <div
-      style={{ ...styles, minHeight: "10px", minWidth: "10px", background: "#fafafa32" }}
+      style={{
+        ...styles,
+        position: "relative",
+        ...(!state.editor.liveMode && element.type === '__body' && {
+          minHeight: "64vh ",
+          maxHeight: "90vh",
+          overflowY: "auto",
+          paddingBottom: size("6xl"),
+          paddingTop: size("6xl"),
+          ...createScroll()
+        }),
+
+        border: (state.editor.selectedElement.id === id &&
+          !state.editor.liveMode &&
+          state.editor.selectedElement.type !== '__body')
+          ? "1px solid #0066cc"
+          : (state.editor.selectedElement.id === id &&
+            !state.editor.liveMode &&
+            state.editor.selectedElement.type === '__body')
+            ? "1px solid #003232"
+            : ""
+      }}
       onDrop={(e) => handleOnDrop(e, id)}
       onDragOver={handleDragOver}
-      draggable={type !== "__body"}
-      onDragStart={(e) => handleDragStart(e, "container")}
+      draggable={false}
       onClick={handleOnClickBody}
     >
-      <sup
-        className={clsx(
-          'absolute -top-[26px] -left-[2px] rounded-sm  hidden',
-          {
-            block:
-              state.editor.selectedElement.id === element.id &&
-              !state.editor.liveMode,
-          }
-        )}
+      <Badge
+        style={{
+          position: "absolute",
+          top: '-26px',
+          left: "-2px",
+        }}
+        disabled={!(state.editor.selectedElement.id === element.id &&
+          !state.editor.liveMode)}
       >
         {element.name}
-      </sup>
+      </Badge>
+
+      {state.editor.selectedElement.id === element.id &&
+        !state.editor.liveMode &&
+        state.editor.selectedElement.type !== '__body' && (
+          <DeleteComponent handleDelete={handleDeleteElement} />
+        )}
 
       {
         Array.isArray(content) &&
@@ -153,84 +181,6 @@ export function Container({ element }: Props) {
         ))
       }
 
-      {state.editor.selectedElement.id === element.id &&
-        !state.editor.liveMode &&
-        state.editor.selectedElement.type !== '__body' && (
-          <DeleteComponent handleDelete={handleDeleteElement} />
-        )}
     </div>
   )
 }
-
-//   return (
-//     <div
-//       style={{
-//         ...styles,
-//         ...((type === 'container' || type === '2Col') && {
-//           maxWidth: "100%",
-//           width: "100%",
-//           minHeight: "20px",
-//           minWidth: "20px"
-//         }),
-//         ...(type === '__body' && { height: "100%" }),
-//         ...(type === '2Col' && {
-//           display: "flex",
-//           flexDirection: "row",
-//           '@media (max-width: 768px)': {
-//             display: 'flex',
-//             flexDirection: 'column',
-//           },
-//         }),
-//         ...(state.editor.selectedElement.id === id &&
-//           !state.editor.liveMode &&
-//           state.editor.selectedElement.type !== '__body' && {
-//           border: "1px solid #0066cc50", borderRadius: ".5rem"
-//         }),
-//         ...(state.editor.selectedElement.id === id &&
-//           !state.editor.liveMode &&
-//           state.editor.selectedElement.type === '__body' && {
-//           border: "1px solid #E9C46A50",
-//           borderRadius: ".5rem"
-//         }),
-//         ...(state.editor.selectedElement.id === id && !state.editor.liveMode && {
-//           border: "1px solid #6d6d6d"
-//         })
-//       } as CSSProperties}
-
-//       onDrop={(e) => handleOnDrop(e, id)}
-//       onDragOver={handleDragOver}
-//       draggable={type !== "__body"}
-//       onDragStart={(e) => handleDragStart(e, "container")}
-//       onClick={handleOnClickBody}
-//     >
-//       <sup
-//         style={{
-//           position: "absolute",
-//           top: "-26px",
-//           left: "-2px",
-//           borderRadius: ".5rem",
-//           display: state.editor.selectedElement.id === element.id &&
-//             !state.editor.liveMode ? "block" : "none"
-//         }}
-//       >
-//         {element.name}
-//       </sup>
-
-//       {
-//         Array.isArray(content) &&
-//         content.map((childElement) => (
-//           <Recursive
-//             key={childElement.id}
-//             element={childElement}
-//           />
-//         ))
-//       }
-
-//       {state.editor.selectedElement.id === element.id &&
-//         !state.editor.liveMode &&
-//         state.editor.selectedElement.type !== '__body' && (
-//           <DeleteComponent handleDelete={handleDeleteElement} />
-//         )}
-//     </div>
-//   )
-// }

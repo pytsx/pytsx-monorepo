@@ -1,48 +1,72 @@
 'use client'
 
-import clsx from 'clsx'
 import React from 'react'
-import ComponentsTab from './tabs/components-tab'
+import ComponentsPlaceholders from '../add-component/components-placeholders'
 import { useEditor } from '../../../provider'
-import { TabList } from './tabs'
+import { SettingsButton } from './settings/settings-button'
+import { border, colors, size } from '../../ui/utils'
+import { Settings } from './settings'
 
 export type SidebarTabs = "settings" | "components"
 
 export const Sidebar = () => {
-  const { state, dispatch } = useEditor()
+  const { state } = useEditor()
   const [active, setActive] = React.useState<SidebarTabs>("settings")
-
-  const changeSidebarTab = (tab: SidebarTabs) => setActive(tab)
-
   return (
-    <aside className='max-h-screen h-screen  right-0 top-0 z-50 bg-card '>
+    <aside
+      style={{
+        maxHeight: "95vh",
+        height: "100%",
+        borderLeft: border("muted"),
+        background: colors("card"),
+        zIndex: 500
+      }}
+    >
       <div
-        className="w-full relative"
-        defaultValue="Settings"
+        style={{
+          width: "100%",
+          position: "relative"
+        }}
       >
         <section
-          className={clsx(
-            'sticky top-0 bg-card/90 backdrop-blur-sm w-full z-[80] py-1 px-2 transition-all',
-            { hidden: state.editor.previewMode }
-          )}
+          style={{
+            width: "100%",
+            zIndex: 200,
+            padding: size({
+              x: "lg",
+              y: "xs"
+            }),
+            borderBottom: border(),
+            display: state.editor.previewMode ? "none" : "flex"
+          }}
         >
-          <TabList setActive={setActive} active={active} />
+          <SettingsButton setActive={setActive} active={active} />
         </section>
 
         <section
-          className={clsx(
-            'w-80 z-[40] shadow-none p-0 h-full transition-all',
-            { hidden: state.editor.previewMode }
-          )}
+          style={{
+            width: "20rem",
+            zIndex: 100,
+            height: "100%",
+            transition: "all 75ms ease-in-out",
+            display: state.editor.previewMode ? "none" : "flex"
+          }}
         >
-          <div className="w-full flex gap-4 h-full ">
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: "1rem",
+              height: "100%"
+            }}
+          >
             <div style={{
               ...(active !== "settings" && { display: "none" })
             }} >
-              {/* <SettingsTab /> */}
+              <Settings />
             </div>
             <div style={{ ...(active !== "components" && { display: "none" }) }}>
-              <ComponentsTab />
+              <ComponentsPlaceholders />
             </div>
           </div>
         </section>

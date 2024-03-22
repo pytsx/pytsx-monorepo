@@ -1,6 +1,6 @@
 import { TypeIcon } from 'lucide-react'
 import React from 'react'
-import { EditorBtns } from '../../../../../provider'
+import { EditorBtns } from '../../../../provider'
 
 type Props = {}
 

@@ -7,29 +7,39 @@ export * from "./tools"
 import { Preview } from "./tools/preview";
 import { ChangeDeviceMode } from "./tools/device-mode";
 import { UndoRedo } from "./tools/undo-redo";
+import { border, colors, size } from "../../ui/utils";
+import { AddComponents } from "../add-component";
+import { useEditor } from "../../../provider";
 
 export function Appbar() {
+  const { state } = useEditor()
   return (
     <nav style={{
-      height: "fit",
+      height: state.editor.liveMode ? "0" : "fit-content",
       width: "100%",
-      padding: ".25rem .5rem",
+      position: "relative",
+      borderBottom: state.editor.liveMode ? "" : border("muted"),
+      background: colors("card"),
     }}>
       <div style={{
-        background: "#0066cc",
-        border: "2px solid #0066cc40",
-        height: "fit",
+        height: "fit-content",
         width: "100%",
         display: "flex",
-        gap: ".5rem",
-        padding: "0 1rem",
-        borderRadius: ".5rem",
+        gap: size("sm"),
+        borderRadius: size("sm"),
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        padding: size({
+          x: "lg",
+          y: "xs"
+        })
       }}>
-        <UndoRedo />
-        <ChangeDeviceMode />
-        <Preview />
+        {!state.editor.liveMode && <AddComponents />}
+        {!state.editor.liveMode && <ChangeDeviceMode />}
+        <span style={{ display: "flex", gap: size("sm") }}>
+          {!state.editor.liveMode && <UndoRedo />}
+          <Preview />
+        </span>
       </div>
     </nav>
   )

@@ -1,5 +1,4 @@
 "use client"
-import clsx from "clsx"
 import { DeleteComponent } from "./delete-component"
 import { EditorElement, useEditor } from "../../../provider"
 import React from "react"
@@ -30,16 +29,20 @@ export function Text({ element }: Props) {
 
   return (
     <div
-      style={styles}
-      className={clsx(
-        'relative transition-all',
-        {
-          '!border-blue-500':
-            state.editor.selectedElement.id === id,
-          '!border-solid': state.editor.selectedElement.id === id,
-          'rounded-sm border-dashed border-[1px] border-slate-300': !state.editor.liveMode,
-        }
-      )}
+      style={{
+        ...styles,
+        position: "relative",
+        width: "100%",
+        border: (state.editor.selectedElement.id === id &&
+          !state.editor.liveMode &&
+          state.editor.selectedElement.type !== '__body')
+          ? "1px solid #0066cc"
+          : (state.editor.selectedElement.id === id &&
+            !state.editor.liveMode &&
+            state.editor.selectedElement.type === '__body')
+            ? "1px solid #003232"
+            : ""
+      }}
       onClick={handleOnClickBody}
     >
       <span

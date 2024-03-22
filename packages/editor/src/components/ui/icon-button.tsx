@@ -1,8 +1,9 @@
 import React, { CSSProperties } from "react"
+import { size } from "./utils"
 
 const IconVariant = (active: boolean, disabled: boolean) => ({
-  width: "2.5rem",
-  height: "2.5rem",
+  width: size("6xl"),
+  height: size("6xl"),
   padding: "0",
   opacity: active || !disabled ? "100%" : "60%",
   userSelect: "none",

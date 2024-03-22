@@ -8,15 +8,19 @@ type Props = {
   active: string
 }
 
-export const TabList = ({ active, setActive }: Props) => {
+export const SettingsButton = ({ active, setActive }: Props) => {
   return (
-    <section className="space-x-2 flex justify-stretch w-full bg-transparent h-fit  ">
+    <section
+      className="space-x-2 flex justify-stretch w-full bg-transparent h-fit  "
+      style={{
+        display: "flex",
+
+      }}
+    >
       <IconButton active={active == "settings"} onClick={() => setActive("settings")}>
         <SettingsIcon />
       </IconButton>
-      <IconButton active={active == "components"} onClick={() => setActive("components")}>
-        <Plus />
-      </IconButton>
+
     </section>
   )
 }
