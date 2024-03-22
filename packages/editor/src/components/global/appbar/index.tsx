@@ -7,26 +7,27 @@ export * from "./tools"
 import { Preview } from "./tools/preview";
 import { ChangeDeviceMode } from "./tools/device-mode";
 import { UndoRedo } from "./tools/undo-redo";
-import { border, colors, size } from "../../ui/utils";
 import { AddComponents } from "../add-component";
 import { useEditor } from "../../../provider";
+import { ToggleThemeMode, size, useTheme } from "@pytsx/ui";
 
 export function Appbar() {
   const { state } = useEditor()
+  const { theme } = useTheme()
   return (
     <nav style={{
       height: state.editor.liveMode ? "0" : "fit-content",
       width: "100%",
       position: "relative",
-      borderBottom: state.editor.liveMode ? "" : border("muted"),
-      background: colors("card"),
+      borderBottom: state.editor.liveMode ? "" : theme.borders.muted,
+      background: theme.colors.card,
     }}>
       <div style={{
         height: "fit-content",
         width: "100%",
         display: "flex",
-        gap: size("sm"),
-        borderRadius: size("sm"),
+        gap: theme.sizes.sm,
+        borderRadius: theme.sizes.sm,
         justifyContent: "space-between",
         alignItems: "center",
         padding: size({
@@ -36,7 +37,8 @@ export function Appbar() {
       }}>
         {!state.editor.liveMode && <AddComponents />}
         {!state.editor.liveMode && <ChangeDeviceMode />}
-        <span style={{ display: "flex", gap: size("sm") }}>
+        <span style={{ display: "flex", gap: theme.sizes.sm }}>
+          {!state.editor.liveMode && <ToggleThemeMode />}
           {!state.editor.liveMode && <UndoRedo />}
           <Preview />
         </span>

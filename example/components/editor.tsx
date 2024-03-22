@@ -18,4 +18,4 @@ export function EditorWrapper({ pageDetails, pageId, liveMode }: Props) {
       />
     </EditorProvider>
   )
-}
+} 

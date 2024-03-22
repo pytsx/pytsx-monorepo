@@ -4,24 +4,30 @@ import React from 'react'
 import ComponentsPlaceholders from '../add-component/components-placeholders'
 import { useEditor } from '../../../provider'
 import { SettingsButton } from './settings/settings-button'
-import { border, colors, size, createScroll } from '../../ui/utils'
 import { Settings } from './settings'
+import { size, createScroll, useTheme } from '@pytsx/ui'
 
 export type SidebarTabs = "settings" | "components"
 
 export const Sidebar = () => {
   const { state } = useEditor()
   const [active, setActive] = React.useState<SidebarTabs>("settings")
+  const { theme } = useTheme()
   return (
     <aside
       style={{
         maxHeight: "95vh",
         height: "100%",
-        borderLeft: border("muted"),
-        background: colors("card"),
+        width: "320px",
+        minWidth: "320px",
+        maxWidth: "320px",
+        borderLeft: theme.borders.muted,
+        background: theme.colors.card,
         zIndex: 500,
         overflowY: "auto",
         overflowX: "hidden",
+        paddingTop: theme.sizes['md'],
+        paddingBottom: theme.sizes['6xl'],
         ...createScroll(),
       }}
     >
@@ -39,7 +45,7 @@ export const Sidebar = () => {
               x: "lg",
               y: "xs"
             }),
-            borderBottom: border(),
+            borderBottom: theme.borders.muted,
             display: state.editor.previewMode ? "none" : "flex"
           }}
         >
@@ -52,14 +58,14 @@ export const Sidebar = () => {
             height: "100%",
             transition: "all 75ms ease-in-out",
             display: state.editor.previewMode ? "none" : "flex",
-            padding: size("md"),
+            padding: theme.sizes.md,
           }}
         >
           <div
             style={{
               width: "100%",
               display: "flex",
-              gap: "1rem",
+              gap: theme.sizes.md,
               height: "100%"
             }}
           >

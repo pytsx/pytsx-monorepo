@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react'
-import { Plus, SettingsIcon } from 'lucide-react'
-import { IconButton } from '../../../ui/icon-button'
+import { SettingsIcon } from 'lucide-react'
 import { SidebarTabs } from '..'
+import { IconButton } from '@pytsx/ui'
 
 type Props = {
   setActive: Dispatch<SetStateAction<SidebarTabs>>

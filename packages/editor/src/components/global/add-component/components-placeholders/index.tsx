@@ -4,7 +4,7 @@ import TextPlaceholder from './text-placeholder'
 import ContainerPlaceholder from './container-placeholder'
 import { EditorBtns } from '../../../../provider'
 import { PlaceholderList } from './placeholders-list'
-import { size } from '../../../ui/utils'
+import { useTheme } from '@pytsx/ui'
 
 type Props = {}
 
@@ -16,6 +16,8 @@ export type PlaceholderElement = {
 }
 
 const ComponentsPlaceholders = (props: Props) => {
+  const { theme } = useTheme()
+  const { sm, md } = theme.sizes
   const elements: PlaceholderElement[] = [
     {
       Component: <TextPlaceholder />,
@@ -34,10 +36,10 @@ const ComponentsPlaceholders = (props: Props) => {
   return (
     <section style={{
       width: 'fit-content',
-      padding: size({
-        x: "md",
-        y: "sm"
-      })
+      padding: sm,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: sm
     }}>
       <PlaceholderList
         title='Layout'

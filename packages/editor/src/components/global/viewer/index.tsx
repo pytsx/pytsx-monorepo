@@ -2,7 +2,7 @@
 import React from "react"
 import { Recursive } from "../../editor/_components/recursive"
 import { useEditor } from "../../../provider"
-import { size } from "../../ui/utils"
+import { size } from "@pytsx/ui"
 
 type Props = {
   liveMode: boolean
@@ -11,7 +11,6 @@ type Props = {
 
 export function Viewer({ content, liveMode }: Props) {
   const { dispatch, state } = useEditor()
-
   React.useEffect(() => {
     if (content) {
       dispatch({
@@ -25,6 +24,7 @@ export function Viewer({ content, liveMode }: Props) {
   }, [content])
 
   return (
+
     <div
       style={{
         /* Center when not in preview/live modes */
@@ -40,7 +40,8 @@ export function Viewer({ content, liveMode }: Props) {
         ...(state.editor.previewMode || state.editor.liveMode ? {
           padding: 0,
         } : {
-          padding: size("4xl")
+            padding: size("sm"),
+            maxHeight: "100%"
         }),
       }}
     >
@@ -49,5 +50,6 @@ export function Viewer({ content, liveMode }: Props) {
           <Recursive element={childElement} key={childElement.id} />
         ))}
     </div>
+
   )
 }

@@ -7,7 +7,7 @@ import { Viewer } from "./_components";
 import { useEditor } from "../../provider";
 import { Sidebar } from "../global/sidebar";
 import { Appbar } from "../global";
-import { createScroll } from "../../components/ui/utils"
+import { createScroll, useTheme } from "@pytsx/ui"
 
 type Props = {
   liveMode?: boolean
@@ -16,6 +16,7 @@ type Props = {
 
 export function Editor({ liveMode, content }: Props) {
   const { dispatch, state } = useEditor()
+  const { theme } = useTheme()
 
   React.useEffect(() => {
     dispatch({
@@ -24,23 +25,16 @@ export function Editor({ liveMode, content }: Props) {
     })
   }, [liveMode])
 
-  React.useEffect(() => {
-    const isBrowser = () => typeof window !== 'undefined'; //The approach recommended by Next.js
-    function scrollToTop() {
-      if (!isBrowser()) return;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
-    scrollToTop()
-  }, [state.editor.liveMode])
-
   return (
     <section
       style={{
         display: "flex",
         flexDirection: "column",
         height: "100vh",
+        maxHeight: state.editor.liveMode ? "100%" : "100vh",
         position: "relative",
         overflow: state.editor.liveMode ? "auto" : "hidden",
+        background: theme.colors.background, 
         ...createScroll()
       }}>
       <span id="editor" />

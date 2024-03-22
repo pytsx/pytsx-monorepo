@@ -1,18 +1,22 @@
 "use client"
-import { v4 } from "uuid"
-import { EditorBtns, EditorElement, useEditor } from "../../../provider";
-import React from "react";
-import { Recursive } from "./recursive";
-import { DeleteComponent } from "./delete-component";
-import { size, createScroll, Badge, useTheme } from "@pytsx/ui";
-import { SelectionBox } from "./selection-box";
 
+import React from "react"
+import { EditorBtns, EditorElement, useEditor } from "../../../provider"
+import { Badge, useTheme } from "@pytsx/ui"
+import { v4 } from 'uuid'
+import { DeleteComponent } from "./delete-component"
 
-type Props = { element: EditorElement }
+type Props = {
+  element: EditorElement
+  style?: React.CSSProperties
+  children: React.ReactNode
+  disableOnDrop?: boolean
+  strictStyle?: boolean
+}
 
-export function Container({ element }: Props) {
-  const { content, styles, type, id, name } = element
+export function SelectionBox({ element, style: selectionBoxStyles, children, disableOnDrop, strictStyle }: Props) {
   const { state, dispatch } = useEditor()
+  const { id, name, styles } = element
   const { theme } = useTheme()
 
   const defaultStyles: React.CSSProperties = {
@@ -26,7 +30,7 @@ export function Container({ element }: Props) {
 
   const handleOnDrop = (e: React.DragEvent, type: string) => {
     e.stopPropagation()
-    if (state.editor.liveMode) return
+    if (state.editor.liveMode || !!disableOnDrop) return
 
     const componentType = e.dataTransfer.getData('componentType') as EditorBtns
     switch (componentType) {
@@ -96,6 +100,7 @@ export function Container({ element }: Props) {
     }
   }
 
+
   const handleDragOver = (e: React.DragEvent) => {
     e.preventDefault()
   }
@@ -121,47 +126,50 @@ export function Container({ element }: Props) {
     })
   }
 
-  const editMode: Record<string, React.CSSProperties> = {
-    body: {
-      minHeight: "90vh",
-      maxHeight: "90vh",
-      margin: "auto auto",
-      borderRadius: theme.sizes.sm,
-      overflowY: "auto",
-      paddingBottom: theme.sizes["6xl"],
-      paddingTop: theme.sizes["6xl"],
-      border: theme.borders.muted,
-      ...createScroll()
-    },
-    container: {
-      border: theme.borders.primary
-    }
-  }
+
 
   const isLiveMode = state.editor.liveMode
   const isEditMode = !isLiveMode
-  const isBody = type === '__body'
+
   const selectedElement = state.editor.selectedElement
   const isSelectedElement = selectedElement.id === id
   const isSelectedElementBody = selectedElement.type === '__body'
 
 
   return (
+    <div
+      style={{
+        position: "relative",
+        border: (state.editor.selectedElement.id === id &&
+          !state.editor.liveMode &&
+          state.editor.selectedElement.type !== '__body')
+          ? theme.borders.primary
+          : "",
+        ...(strictStyle ? {} : styles),
+        ...selectionBoxStyles,
+      }}
+      onDrop={(e) => handleOnDrop(e, id)}
+      onDragOver={handleDragOver}
+      draggable={false}
+      onClick={handleOnClickBody}
+    >
+      <Badge
+        style={{
+          position: "absolute",
+          top: '-26px',
+          left: "-2px",
+        }}
+        disabled={!(isSelectedElement && isEditMode)}
+      >
+        {name}
+      </Badge>
 
-    <SelectionBox element={element} style={{
-      ...(isSelectedElement && isEditMode && !isSelectedElementBody) && editMode.container,
-      ...(isEditMode && isBody && editMode.body),
-    }}>
-      {
-        Array.isArray(content) &&
-        content.map((childElement) => (
-          <Recursive
-            key={childElement.id}
-            element={childElement}
-          />
-        ))
-      }
+      {isSelectedElement && isEditMode && !isSelectedElementBody && (
+        <DeleteComponent handleDelete={handleDeleteElement} />
+      )}
 
-    </SelectionBox>
+      {children}
+
+    </div>
   )
 }

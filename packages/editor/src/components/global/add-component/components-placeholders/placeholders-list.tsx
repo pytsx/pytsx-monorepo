@@ -1,6 +1,6 @@
 import React from "react"
 import { PlaceholderElement } from "."
-import { size } from "../../../ui/utils"
+import { Typography, size } from "@pytsx/ui"
 
 const styles: Record<string, React.CSSProperties> = {
   title: {
@@ -32,7 +32,6 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: "center",
   },
   childLabel: {
-    color: 'rgba(226, 232, 240, 0.7)',
     userSelect: "none",
     fontSize: "14px"
   }
@@ -43,7 +42,7 @@ const PlaceholderItem = ({ component, label }: { component: React.ReactNode, lab
   return (
     <div style={styles.childContainer}>
       {component}
-      <span style={styles.childLabel}>{label}</span>
+      <Typography style={styles.childLabel}>{label}</Typography>
     </div>
   )
 }
@@ -51,7 +50,7 @@ const PlaceholderItem = ({ component, label }: { component: React.ReactNode, lab
 export const PlaceholderList = ({ elements, title }: { elements: PlaceholderElement[], title: string }) => {
   return (
     <div style={styles.div1}>
-      <p style={styles.title}>{title}</p>
+      <Typography style={styles.title}>{title}</Typography>
       <div style={styles.div2}>
         {elements.map((element) => (
           <PlaceholderItem

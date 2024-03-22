@@ -1,9 +1,10 @@
 import { Trash } from "lucide-react";
 import React from "react";
-import { colors, sizes } from "../../ui/utils";
+import { colors, useTheme } from "@pytsx/ui";
 
 export function DeleteComponent({ handleDelete }: { handleDelete: () => void }) {
-  const { sm, "2xl": _2xl, lg } = sizes()
+  const { theme } = useTheme()
+  const { sm, "2xl": _2xl, lg } = theme.sizes
   return (
     <div
       style={{

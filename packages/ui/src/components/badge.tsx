@@ -1,6 +1,7 @@
-
+'use client'
 import React from "react"
-import { colors, sizes } from "./utils"
+import { useTheme } from "../provider"
+import { Typography } from "./typography"
 
 type Props = {
   children: React.ReactNode
@@ -8,7 +9,9 @@ type Props = {
   disabled?: boolean
 }
 export function Badge({ children, style, disabled }: Props) {
-  const { xs } = sizes()
+  const { theme } = useTheme()
+  const { xs, md } = theme.sizes
+
   const customStyle = {
     ...style,
     ...(disabled !== undefined && {
@@ -17,18 +20,19 @@ export function Badge({ children, style, disabled }: Props) {
     )
   }
   return (
-    <span
+    <Typography
       style={{
         borderRadius: xs,
-        border: "1px solid #3d3d3daf",
-        background: "#fafafa",
-        color: colors("card"),
+        border: theme.borders.primary,
         fontSize: "smaller",
-        padding: `0 ${xs}`,
+        padding: `0 ${md}`,
         ...customStyle,
+        background: "trasparent",
+        backdropFilter: "blur(8px)"
       }}
+      variant={"span"}
     >
       {children}
-    </span>
+    </Typography>
   )
 }

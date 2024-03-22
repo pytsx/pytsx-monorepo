@@ -32,7 +32,6 @@ export const editorReducer = (
           currentIndex: updatedHistory.length - 1,
         },
       }
-
       return newEditorState
 
     case 'UPDATE_ELEMENT':

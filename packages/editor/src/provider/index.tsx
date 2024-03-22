@@ -8,6 +8,8 @@ import { initialState } from "./reducer/initial-state"
 import { EditorContextProps, EditorProviderProps } from "./interface"
 import { editorReducer } from "./reducer"
 
+import { ThemeProvider } from '@pytsx/ui'
+
 export const EditorContext = React.createContext<EditorContextProps>({
   state: initialState,
   dispatch: () => { }
@@ -21,7 +23,9 @@ export const EditorProvider = ({ children }: EditorProviderProps) => {
       state,
       dispatch
     }}>
-      {children}
+      <ThemeProvider>
+        {children}
+      </ThemeProvider>
     </EditorContext.Provider>
   )
 }

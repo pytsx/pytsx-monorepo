@@ -3,7 +3,7 @@
 import React from "react"
 import { DeviceTypes, useEditor } from "../../../../provider"
 import { Laptop, Smartphone, Tablet } from 'lucide-react'
-import { IconButton } from "../../../ui/icon-button"
+import { IconButton } from "@pytsx/ui"
 
 export function ChangeDeviceMode() {
   const { dispatch, state } = useEditor()

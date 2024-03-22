@@ -3,7 +3,7 @@ import React from "react";
 import { SettingsProps } from "./interface";
 import { useEditor } from "../../../../../provider";
 import { AlignVerticalJustifyCenter, ChevronsLeftRightIcon, LucideImageDown } from "lucide-react";
-import { Input } from "../../../../ui/input";
+import { Input, Typography } from "@pytsx/ui";
 
 export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
@@ -12,12 +12,12 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
     <section
       className="px-6 py-0 "
     >
-      <p className="!no-underline">
+      <Typography className="!no-underline">
         Decorations
-      </p>
+      </Typography>
       <div className="px-2 flex flex-col gap-4">
         <div>
-          <label className="text-muted-foreground">Opacity</label>
+          <Typography>Opacity</Typography>
           <div className="flex items-center justify-end">
             <small className="p-2">
               {typeof state.editor.selectedElement.styles?.opacity ===
@@ -55,7 +55,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
           />
         </div>
         <div>
-          <label className="text-muted-foreground">Border Radius</label>
+          <Typography>Border Radius</Typography>
           <div className="flex items-center justify-end">
             <small className="">
               {typeof state.editor.selectedElement.styles?.borderRadius ===
@@ -94,7 +94,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-muted-foreground">Background Color</label>
+          <Typography>Background Color</Typography>
           <div className="flex  border-[1px] rounded-md overflow-clip">
             <div
               className="w-12 "
@@ -113,7 +113,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-muted-foreground">Background Image</label>
+          <Typography>Background Image</Typography>
           <div className="flex  border-[1px] rounded-md overflow-clip">
             <div
               className="w-12 "
@@ -132,7 +132,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
           </div>
         </div>
         <div className="flex flex-col gap-2">
-          <label className="text-muted-foreground">Image Position</label>
+          <Typography>Image Position</Typography>
           <div
           // onValueChange={(e) =>
           //   handleOnChanges({

@@ -2,7 +2,7 @@
 import React from "react";
 import { useEditor } from "../../../../provider";
 import { Redo2, Undo2 } from "lucide-react";
-import { IconButton } from "../../../ui/icon-button";
+import { IconButton } from "@pytsx/ui";
 
 export function UndoRedo() {
   const { dispatch, state } = useEditor()

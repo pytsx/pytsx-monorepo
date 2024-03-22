@@ -3,7 +3,7 @@ import React from "react"
 import { SettingsProps } from "./interface";
 import { AlignHorizontalJustifyCenterIcon, AlignHorizontalJustifyEndIcon, AlignHorizontalJustifyStart, AlignHorizontalSpaceAround, AlignHorizontalSpaceBetween, AlignVerticalJustifyCenter, AlignVerticalJustifyStart } from "lucide-react";
 import { useEditor } from "../../../../../provider";
-import { Input } from "../../../../ui/input";
+import { Input, Typography } from "@pytsx/ui";
 
 export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
@@ -13,9 +13,9 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
     <section
       className="px-6 py-0  "
     >
-      <p className="!no-underline">Flexbox</p>
+      <Typography className="!no-underline">Flexbox</Typography>
       <div className='px-2 space-y-2'>
-        <label className="text-muted-foreground">Justify Content</label>
+        <Typography >Justify Content</Typography>
         <div
         // onValueChange={(e) =>
         //   handleOnChanges({
@@ -60,7 +60,7 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
             </span>
           </div>
         </div>
-        <label className="text-muted-foreground">Align Items</label>
+        <Typography >Align Items</Typography>
         <div
         // onValueChange={(e) =>
         //   handleOnChanges({
@@ -102,10 +102,10 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
               })
             }}
           />
-          <label className="text-muted-foreground">Flex</label>
+          <Typography >Flex</Typography>
         </div>
         <div>
-          <label className="text-muted-foreground"> Direction</label>
+          <Typography > Direction</Typography>
           <Input
             placeholder="px"
             id="flexDirection"

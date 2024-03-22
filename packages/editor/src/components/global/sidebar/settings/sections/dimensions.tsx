@@ -2,7 +2,7 @@
 import React from "react"
 import { SettingsProps } from "./interface"
 import { useEditor } from "../../../../../provider"
-import { Input } from "../../../../ui/input"
+import { Input, Typography } from "@pytsx/ui"
 
 
 export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
@@ -13,16 +13,16 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
     <section
       className=" px-6 py-0 "
     >
-      <p className="!no-underline">
+      <Typography className="!no-underline">
         Dimensions
-      </p>
+      </Typography>
       <div className='px-2' >
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <div className="flex gap-4 flex-col">
               <div className="flex gap-4">
                 <div>
-                  <label className="text-muted-foreground">Height</label>
+                  <Typography >Height</Typography>
                   <Input
                     id="height"
                     placeholder="px"
@@ -31,7 +31,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                   />
                 </div>
                 <div>
-                  <label className="text-muted-foreground">Width</label>
+                  <Typography >Width</Typography>
                   <Input
                     placeholder="px"
                     id="width"
@@ -45,7 +45,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
             <div className="flex gap-4 flex-col">
               <div className="flex gap-4">
                 <div>
-                  <label className="text-muted-foreground">Top</label>
+                  <Typography >Top</Typography>
                   <Input
                     id="marginTop"
                     placeholder="px"
@@ -54,7 +54,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                   />
                 </div>
                 <div>
-                  <label className="text-muted-foreground">Bottom</label>
+                  <Typography >Bottom</Typography>
                   <Input
                     placeholder="px"
                     id="marginBottom"
@@ -65,7 +65,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               </div>
               <div className="flex gap-4">
                 <div>
-                  <label className="text-muted-foreground">Left</label>
+                  <Typography >Left</Typography>
                   <Input
                     placeholder="px"
                     id="marginLeft"
@@ -74,7 +74,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                   />
                 </div>
                 <div>
-                  <label className="text-muted-foreground">Right</label>
+                  <Typography >Right</Typography>
                   <Input
                     placeholder="px"
                     id="marginRight"
@@ -90,7 +90,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
             <div className="flex gap-4 flex-col">
               <div className="flex gap-4">
                 <div>
-                  <label className="text-muted-foreground">Top</label>
+                  <Typography >Top</Typography>
                   <Input
                     placeholder="px"
                     id="paddingTop"
@@ -99,7 +99,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                   />
                 </div>
                 <div>
-                  <label className="text-muted-foreground">Bottom</label>
+                  <Typography >Bottom</Typography>
                   <Input
                     placeholder="px"
                     id="paddingBottom"
@@ -110,7 +110,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               </div>
               <div className="flex gap-4">
                 <div>
-                  <label className="text-muted-foreground">Left</label>
+                  <Typography >Left</Typography>
                   <Input
                     placeholder="px"
                     id="paddingLeft"
@@ -119,7 +119,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                   />
                 </div>
                 <div>
-                  <label className="text-muted-foreground">Right</label>
+                  <Typography >Right</Typography>
                   <Input
                     placeholder="px"
                     id="paddingRight"

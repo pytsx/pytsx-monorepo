@@ -1,12 +1,8 @@
 "use client"
 import React from "react";
 import { useEditor } from "../../../../../provider";
-import { AlignCenter, AlignJustify, AlignLeft, AlignRight } from "lucide-react";
 import { SettingsProps } from "./interface";
-import { Input } from "../../../../ui/input";
-
-
-
+import { Input, Typography } from "@pytsx/ui";
 
 export function TypographySettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
@@ -16,12 +12,12 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
       // value="Typography"
       className="px-6 py-0  border-y-[1px]"
     >
-      <p className="!no-underline">
+      <Typography className="!no-underline">
         Typography
-      </p>
+      </Typography>
       <div className="px-2 flex flex-col gap-2 ">
         <div className="flex flex-col gap-2 ">
-          <p className="text-muted-foreground">Text Align</p>
+          <Typography className="text-muted-foreground">Text Align</Typography>
           <select
             onChange={(e) =>
               handleOnChanges({
@@ -60,7 +56,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
           </select>
         </div>
         <div className="flex flex-col gap-2">
-          <p className="text-muted-foreground">Font Family</p>
+          <Typography className="text-muted-foreground">Font Family</Typography>
           <Input
             id="DM Sans"
             onChange={handleOnChanges}
@@ -68,7 +64,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <p className="text-muted-foreground">Color</p>
+          <Typography className="text-muted-foreground">Color</Typography>
           <Input
             id="color"
             onChange={handleOnChanges}
