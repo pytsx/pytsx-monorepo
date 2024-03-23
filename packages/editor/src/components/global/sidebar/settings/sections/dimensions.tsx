@@ -3,6 +3,7 @@ import React from "react"
 import { SettingsProps } from "./interface"
 import { useEditor } from "../../../../../provider"
 import { Input, Typography } from "@pytsx/ui"
+import { SettingsContainer } from "./settings-container"
 
 
 export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
@@ -10,9 +11,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
 
 
   return (
-    <section
-      className=" px-6 py-0 "
-    >
+    <SettingsContainer>
       <Typography className="!no-underline">
         Dimensions
       </Typography>
@@ -41,7 +40,8 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 </div>
               </div>
             </div>
-            <p>Margin px</p>
+
+            <Typography>Margin px</Typography>
             <div className="flex gap-4 flex-col">
               <div className="flex gap-4">
                 <div>
@@ -86,7 +86,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
             </div>
           </div>
           <div className="flex flex-col gap-2">
-            <p>Padding px</p>
+            <Typography>Padding px</Typography>
             <div className="flex gap-4 flex-col">
               <div className="flex gap-4">
                 <div>
@@ -132,6 +132,6 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
           </div>
         </div>
       </div>
-    </section>
+    </SettingsContainer>
   )
 }

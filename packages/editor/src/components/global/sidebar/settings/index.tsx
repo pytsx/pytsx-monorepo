@@ -34,7 +34,6 @@ export function Settings() {
     <section
       style={{ width: "100%" }}
     >
-      <CustomSettings />
       <TypographySettings handleOnChanges={handleOnChanges} />
       <DimensionsSettings handleOnChanges={handleOnChanges} />
       <DecorationsSettings handleOnChanges={handleOnChanges} />

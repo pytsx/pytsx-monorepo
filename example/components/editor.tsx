@@ -1,4 +1,5 @@
 "use client"
+
 import { Editor, EditorProvider, IPage } from "@pytsx/editor"
 
 type Props = {

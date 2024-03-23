@@ -4,14 +4,13 @@ import { SettingsProps } from "./interface";
 import { useEditor } from "../../../../../provider";
 import { AlignVerticalJustifyCenter, ChevronsLeftRightIcon, LucideImageDown } from "lucide-react";
 import { Input, Typography } from "@pytsx/ui";
+import { SettingsContainer } from "./settings-container";
 
 export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
 
   return (
-    <section
-      className="px-6 py-0 "
-    >
+    <SettingsContainer>
       <Typography className="!no-underline">
         Decorations
       </Typography>
@@ -167,6 +166,6 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
           </div>
         </div>
       </div>
-    </section>
+    </SettingsContainer>
   )
 }

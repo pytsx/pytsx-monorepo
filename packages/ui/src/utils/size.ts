@@ -1,4 +1,4 @@
-import { SizeExtraLargeType, SizeType } from "../provider/interface"
+import { ITheme, SizeExtraLargeType, SizeType } from "../provider/interface"
 
 type OrientationType = "x" | "y" | "xy"
 
@@ -54,4 +54,14 @@ export const createSizes = (factor: number = sizefactor): Record<SizeType, strin
     response[size] = obtainSize(size, factor).toString().concat("rem")
   }
   return response
+}
+
+
+export const createSimpleSizes = (factor: number = sizefactor / 2, maxSize: number = 128): ITheme["spacing"] => {
+  const arr = Array(maxSize)
+  const simpleSizes: Record<number, string> = {}
+  for (let i of arr) {
+    simpleSizes[i] = `${factor * i + 1}rem`
+  }
+  return simpleSizes
 }

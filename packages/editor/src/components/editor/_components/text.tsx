@@ -30,7 +30,7 @@ export function Text({ element }: Props) {
               elementDetails: {
                 ...element,
                 content: {
-                  innerText: spanElement.innerText,
+                  innerText: spanElement.innerText || "",
                 },
               },
             },
@@ -38,7 +38,8 @@ export function Text({ element }: Props) {
         }}
       >
         {!Array.isArray(content) &&
-          content.innerText}
+          content.innerText || ""
+        }
       </Typography>
     </SelectionBox>
   )

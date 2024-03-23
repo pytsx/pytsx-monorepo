@@ -28,7 +28,8 @@ export function Badge({ children, style, disabled }: Props) {
         padding: `0 ${md}`,
         ...customStyle,
         background: "trasparent",
-        backdropFilter: "blur(8px)"
+        backdropFilter: "blur(8px)",
+        userSelect: "none"
       }}
       variant={"span"}
     >

@@ -2,104 +2,112 @@
 import React from "react";
 import { useEditor } from "../../../../../provider";
 import { SettingsProps } from "./interface";
-import { Input, Typography } from "@pytsx/ui";
+import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, Typography, useTheme } from "@pytsx/ui";
+import { SettingsContainer } from "./settings-container";
 
 export function TypographySettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
-
+  const { theme } = useTheme()
   return (
-    <section
-      // value="Typography"
-      className="px-6 py-0  border-y-[1px]"
-    >
-      <Typography className="!no-underline">
+    <SettingsContainer>
+      <Typography >
         Typography
       </Typography>
-      <div className="px-2 flex flex-col gap-2 ">
-        <div className="flex flex-col gap-2 ">
-          <Typography className="text-muted-foreground">Text Align</Typography>
-          <select
-            onChange={(e) =>
+      <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm, width: "100%" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm, width: "100%" }}>
+          <Typography style={{ userSelect: "none" }}>Text Align</Typography>
+          <Select
+            value={state.editor.selectedElement.styles.textAlign}
+            onValueChange={(e) =>
               handleOnChanges({
                 target: {
                   id: 'textAlign',
-                  value: e.target.value,
+                  value: e,
                 },
               })
-            }
-            value={state.editor.selectedElement.styles.textAlign}
-          >
-            <option
-              value="left"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted"
-            >
-              left
-            </option>
-            <option
-              value="right"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted"
-            >
-              right
-            </option>
-            <option
-              value="center"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted"
-            >
-              center
-            </option>
-            <option
-              value="justify"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted "
-            >
-              justify
-            </option>
-          </select>
+          }>
+            <SelectTrigger>
+              <SelectValue placeholder="text align" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem
+                value="left"
+                className="w-10 h-10 p-0 data-[state=active]:bg-muted"
+              >
+                left
+              </SelectItem>
+              <SelectItem
+                value="right"
+                className="w-10 h-10 p-0 data-[state=active]:bg-muted"
+              >
+                right
+              </SelectItem>
+              <SelectItem
+                value="center"
+                className="w-10 h-10 p-0 data-[state=active]:bg-muted"
+              >
+                center
+              </SelectItem>
+              <SelectItem
+                value="justify"
+                className="w-10 h-10 p-0 data-[state=active]:bg-muted "
+              >
+                justify
+              </SelectItem>
+            </SelectContent>
+          </Select>
         </div>
-        <div className="flex flex-col gap-2">
-          <Typography className="text-muted-foreground">Font Family</Typography>
+
+        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm, width: "100%" }}>
+          <Typography style={{ userSelect: "none" }}>Font Family</Typography>
           <Input
             id="DM Sans"
             onChange={handleOnChanges}
             value={state.editor.selectedElement.styles.fontFamily}
           />
         </div>
+
         <div className="flex flex-col gap-2">
-          <Typography className="text-muted-foreground">Color</Typography>
+          <Typography style={{ userSelect: "none" }}>Color</Typography>
           <Input
             id="color"
+            type="color"
             onChange={handleOnChanges}
             value={state.editor.selectedElement.styles.color}
           />
         </div>
-        <div className="flex gap-4">
+
+
           <div>
-            <label className="text-muted-foreground">Weight</label>
-            <select
-              onChange={(e) =>
-                handleOnChanges({
-                  target: {
-                    id: 'font-weight',
-                    value: e.target.value,
+          <Typography style={{ userSelect: "none" }}>Weight</Typography>
+          <Select onValueChange={(e) =>
+            handleOnChanges({
+              target: {
+                id: 'font-weight',
+                value: e,
                   },
-                })
-              }
-            >
-              <option value="bold">Bold</option>
-              <option value="normal">Regular</option>
-              <option value="lighter">Light</option>
-            </select>
+            })}>
+            <SelectTrigger>
+              <SelectValue placeholder="font weight" />
+            </SelectTrigger>
+            <SelectContent >
+              <SelectItem value="bold">Bold</SelectItem>
+              <SelectItem value="normal">Regular</SelectItem>
+              <SelectItem value="lighter">Light</SelectItem>
+            </SelectContent>
+          </Select>
           </div>
+
           <div>
-            <label className="text-muted-foreground">Size</label>
+          <Typography style={{ userSelect: "none" }}>Size</Typography>
             <Input
               placeholder="px"
               id="fontSize"
               onChange={handleOnChanges}
               value={state.editor.selectedElement.styles.fontSize}
-            />
-          </div>
+          />
         </div>
       </div>
-    </section>
+    </SettingsContainer>
   )
 }

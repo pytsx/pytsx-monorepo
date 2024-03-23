@@ -1,7 +1,5 @@
-'use client'
-
+"use client"
 import * as React from "react"
-import { colors, size } from "../utils"
 import { useTheme } from "../provider"
 
 export interface InputProps
@@ -12,21 +10,16 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const { theme } = useTheme()
     return (
       <input
-        type={type}
         style={{
-          display: "flex",
-          height: theme.sizes["4xl"],
-          width: "100%",
-          borderRadius: theme.sizes.sm,
-          border: theme.borders.input,
           background: theme.colors.input,
+          border: theme.borders.muted,
+          padding: `${theme.sizes.sm} ${theme.sizes.lg}`,
           color: theme.colors["text-primary"],
-          padding: size({
-            x: "lg",
-            y: "md"
-          }),
+          borderRadius: theme.sizes.xs,
+          width: "100%",
           ...style
         }}
+        type={type}
         ref={ref}
         {...props}
       />

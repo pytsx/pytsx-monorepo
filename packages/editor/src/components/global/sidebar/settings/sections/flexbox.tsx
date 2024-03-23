@@ -3,93 +3,125 @@ import React from "react"
 import { SettingsProps } from "./interface";
 import { AlignHorizontalJustifyCenterIcon, AlignHorizontalJustifyEndIcon, AlignHorizontalJustifyStart, AlignHorizontalSpaceAround, AlignHorizontalSpaceBetween, AlignVerticalJustifyCenter, AlignVerticalJustifyStart } from "lucide-react";
 import { useEditor } from "../../../../../provider";
-import { Input, Typography } from "@pytsx/ui";
+import { Input, Tabs, TabsList, TabsTrigger, Typography, useTheme } from "@pytsx/ui";
+import { SettingsContainer } from "./settings-container";
 
 export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
-
+  const { theme } = useTheme()
   return (
 
-    <section
-      className="px-6 py-0  "
-    >
+    <SettingsContainer >
       <Typography className="!no-underline">Flexbox</Typography>
-      <div className='px-2 space-y-2'>
+      <div style={{ display: "flex", gap: theme.sizes.sm, flexDirection: "column", width: "100%" }}>
         <Typography >Justify Content</Typography>
-        <div
-        // onValueChange={(e) =>
-        //   handleOnChanges({
-        //     target: {
-        //       id: 'justifyContent',
-        //       value: e,
-        //     },
-        //   })
-        // }
-        // value={state.editor.selectedElement.styles.justifyContent}
+        <Tabs
+          onValueChange={(e) =>
+            handleOnChanges({
+              target: {
+                id: 'justifyContent',
+                value: e,
+              },
+            })
+          }
+          value={state.editor.selectedElement.styles.justifyContent}
         >
-          <div className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
-            <span
-              // value="space-between"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted"
+          <TabsList className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4"
+            style={{
+              display: "flex",
+              alignContent: "center",
+              justifyContent: "space-between",
+              borderRadius: theme.sizes.sm
+            }}
+          >
+            <TabsTrigger
+              value="space-between"
+              style={{
+                width: theme.spacing[8],
+                height: theme.spacing[8],
+              }}
             >
               <AlignHorizontalSpaceBetween size={18} />
-            </span>
-            <span
-              // value="space-evenly"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted"
+            </TabsTrigger>
+            <TabsTrigger
+              value="space-evenly"
+              style={{
+                width: theme.spacing[8],
+                height: theme.spacing[8],
+              }}
             >
               <AlignHorizontalSpaceAround size={18} />
-            </span>
-            <span
-              // value="center"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted"
+            </TabsTrigger>
+            <TabsTrigger
+              value="center"
+              style={{
+                width: theme.spacing[8],
+                height: theme.spacing[8],
+              }}
             >
               <AlignHorizontalJustifyCenterIcon size={18} />
-            </span>
-            <span
-              // value="start"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted "
+            </TabsTrigger>
+            <TabsTrigger
+              value="start"
+              style={{
+                width: theme.spacing[8],
+                height: theme.spacing[8],
+              }}
             >
               <AlignHorizontalJustifyStart size={18} />
-            </span>
-            <span
-              // value="end"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted "
+            </TabsTrigger>
+            <TabsTrigger
+              value="end"
+              style={{
+                width: theme.spacing[8],
+                height: theme.spacing[8],
+              }}
             >
               <AlignHorizontalJustifyEndIcon size={18} />
-            </span>
-          </div>
-        </div>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
         <Typography >Align Items</Typography>
-        <div
-        // onValueChange={(e) =>
-        //   handleOnChanges({
-        //     target: {
-        //       id: 'alignItems',
-        //       value: e,
-        //     },
-        //   })
-        // }
-        // value={state.editor.selectedElement.styles.alignItems}
+        <Tabs
+          onValueChange={(e) =>
+            handleOnChanges({
+              target: {
+                id: 'alignItems',
+                value: e,
+              },
+            })
+          }
+          value={state.editor.selectedElement.styles.alignItems}
         >
-          <div className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
-            <span
-              // value="center"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted"
+          <TabsList className="flex items-center flex-row justify-between border-[1px] rounded-md bg-transparent h-fit gap-4">
+            <TabsTrigger
+              value="center"
+              style={{
+                width: theme.spacing[8],
+                height: theme.spacing[8],
+              }}
             >
               <AlignVerticalJustifyCenter size={18} />
-            </span>
-            <span
-              // value="normal"
-              className="w-10 h-10 p-0 data-[state=active]:bg-muted "
+            </TabsTrigger>
+            <TabsTrigger
+              value="normal"
+              style={{
+                width: theme.spacing[8],
+                height: theme.spacing[8],
+              }}
             >
               <AlignVerticalJustifyStart size={18} />
-            </span>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
+        <div style={{ display: "flex", alignItems: "center", gap: theme.spacing[2] }}>
+          <Typography >Flex</Typography>
           <Input
-            className="h-4 w-4"
+            style={{
+              height: theme.spacing[4],
+              width: theme.spacing[4],
+            }}
             placeholder="px"
             type="checkbox"
             id="display"
@@ -102,7 +134,6 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
               })
             }}
           />
-          <Typography >Flex</Typography>
         </div>
         <div>
           <Typography > Direction</Typography>
@@ -113,7 +144,11 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
             value={state.editor.selectedElement.styles.flexDirection}
           />
         </div>
+
+
       </div>
-    </section>
+
+
+    </SettingsContainer>
   )
 }

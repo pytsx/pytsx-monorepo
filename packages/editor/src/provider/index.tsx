@@ -30,7 +30,6 @@ export const EditorProvider = ({ children }: EditorProviderProps) => {
   )
 }
 
-
 export const useEditor = () => {
   const context = React.useContext(EditorContext)
   if (!context) {

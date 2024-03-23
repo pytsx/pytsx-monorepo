@@ -31,6 +31,7 @@ export interface ITheme {
   borders: Record<ColorType, string>,
   sizes: Record<SizeType, string>,
   screens: Record<ScreenTypes, string>
+  spacing: Record<number, string>
 }
 
 export interface IThemeContext {

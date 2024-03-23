@@ -2,6 +2,7 @@
 import React from "react";
 import { useEditor } from "../../../../../provider";
 import { Input, Typography } from '@pytsx/ui'
+import { SettingsContainer } from "./settings-container";
 
 export function CustomSettings() {
   const { state, dispatch } = useEditor()
@@ -28,10 +29,7 @@ export function CustomSettings() {
   }
 
   return (
-    <section
-      // value="Custom"
-      className="px-6 py-0  "
-    >
+    <SettingsContainer>
       <Typography>Custom</Typography>
       <div className='px-2'>
         {state.editor.selectedElement.type === 'link' &&
@@ -47,6 +45,6 @@ export function CustomSettings() {
             </div>
           )}
       </div>
-    </section>
+    </SettingsContainer>
   )
 }

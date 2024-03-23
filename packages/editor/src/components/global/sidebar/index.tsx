@@ -56,6 +56,7 @@ export const Sidebar = () => {
           style={{
             zIndex: 100,
             height: "100%",
+            width: "100%",
             transition: "all 75ms ease-in-out",
             display: state.editor.previewMode ? "none" : "flex",
             padding: theme.sizes.md,
@@ -70,7 +71,8 @@ export const Sidebar = () => {
             }}
           >
             <div style={{
-              ...(active !== "settings" && { display: "none" })
+              ...(active !== "settings" && { display: "none" }),
+              width: "100%",
             }} >
               <Settings />
             </div>
