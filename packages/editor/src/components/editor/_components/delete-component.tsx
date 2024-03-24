@@ -1,36 +1,45 @@
+"use client"
 import { Trash } from "lucide-react";
 import React from "react";
 import { colors, useTheme } from "@pytsx/ui";
+import { EditorElement, useEditor } from "../../../provider";
 
-export function DeleteComponent({ handleDelete }: { handleDelete: () => void }) {
+export function DeleteComponent({ element }: { element: EditorElement }) {
+  const { dispatch } = useEditor()
   const { theme } = useTheme()
-  const { sm, "2xl": _2xl, lg } = theme.sizes
+  const { xs, sm, md } = theme.sizes
+
+  const handleDeleteElement = () => {
+    dispatch({
+      type: 'DELETE_ELEMENT',
+      payload: {
+        elementDetails: element,
+      },
+    })
+  }
+
   return (
-    <div
+    <button
       style={{
         cursor: "pointer",
         background: colors("dangerous"),
         padding: sm,
-        borderRadius: `${sm} ${sm} 0 0`,
+        borderRadius: xs,
         width: "fit-content",
-        position: "absolute",
-        top: `calc(-${_2xl} - 1px)`,
-        right: "-1px",
-        maxHeight: `${_2xl}`,
-        height: _2xl,
+        height: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center"
       }}
-      onClick={handleDelete}
+      onClick={handleDeleteElement}
     >
       <Trash
         style={{
-          color: "#0f0000",
-          width: lg,
-          height: lg
+          color: "#fafafaaf",
+          width: md,
+          height: md
         }}
       />
-    </div>
+    </button>
   )
 }

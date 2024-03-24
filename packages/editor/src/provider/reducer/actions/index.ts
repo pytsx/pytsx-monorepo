@@ -1,5 +1,5 @@
 export type * from "./interface"
-import { EditorElement } from "../../interface"
+import { EditorElement, EditorState } from "../../interface"
 import { EditorAction } from "./interface"
 
 export const addAnElement = (
@@ -62,4 +62,63 @@ export const deleteAnElement = (
     }
     return true
   })
+}
+
+
+export const updateHistory = (
+  state: EditorState,
+  newEditorState: EditorState["editor"],
+): EditorState["history"] => {
+  // Update the history to include the entire updated EditorState
+  const newEditorHistory: EditorState["history"]["history"] = [
+    ...state.history.history.slice(0, state.history.currentIndex + 1),
+    { ...newEditorState }, // Save a copy of the updated state
+  ]
+
+  return {
+    ...state.history,
+    history: newEditorHistory,
+    currentIndex: newEditorHistory.length - 1,
+  }
+}
+
+
+export const updateEditor = (
+  state: EditorState,
+  action: EditorAction,
+): EditorState["editor"] => {
+  switch (action.type) {
+    case "ADD_ELEMENT":
+      return {
+        ...state.editor,
+        elements: addAnElement(state.editor.elements, action),
+        selectedElement: action.payload.elementDetails
+      };
+    case "DELETE_ELEMENT":
+      return {
+        ...state.editor,
+        elements: deleteAnElement(state.editor.elements, action),
+      }
+    case "UPDATE_ELEMENT":
+      // Perform your logic to update the element in the state
+      const UpdatedElementIsSelected =
+        state.editor.selectedElement.id === action.payload.elementDetails.id
+      return {
+        ...state.editor,
+        elements: updateAnElement(state.editor.elements, action),
+        selectedElement: UpdatedElementIsSelected
+          ? action.payload.elementDetails
+          : emptyEditorElement,
+      }
+    default:
+      return state["editor"];
+  }
+}
+
+const emptyEditorElement: EditorElement = {
+  id: '',
+  content: [],
+  name: '',
+  styles: {},
+  type: null,
 }

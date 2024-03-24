@@ -15,6 +15,7 @@ export const createTheme = (mode: ModeType) => {
     borders: createBorders(Object.keys(colors) as ColorType[]),
     sizes: createSizes(),
     screens: {
+      "screen-xs": "420px",
       "screen-sm": "640px",
       "screen-md": "768px",
       "screen-lg": "1024px",

@@ -20,11 +20,12 @@ export function AddComponents() {
           width: "fit-content",
           boxSizing: "border-box",
           top: "106%",
-          border: theme.borders.muted,
-          left: theme.sizes.xs,
-          background: theme.colors.card,
+          border: theme.borders.primary,
+          left: "2px",
+          background: "transparent",
+          backdropFilter: "blur(8px)",
           borderRadius: theme.sizes.xs,
-          zIndex: 400,
+          zIndex: 600,
           display: "flex",
         }}>
           <ComponentsPlaceholders />

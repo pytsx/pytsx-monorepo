@@ -24,7 +24,7 @@ export type ColorType =
   | "input"
   | "text-primary"
 
-type ScreenTypes = "screen-sm" | "screen-md" | "screen-lg" | "screen-xl" | "screen-2xl"
+type ScreenTypes = "screen-xs" | "screen-sm" | "screen-md" | "screen-lg" | "screen-xl" | "screen-2xl"
 
 export interface ITheme {
   colors: Record<ColorType, string>,

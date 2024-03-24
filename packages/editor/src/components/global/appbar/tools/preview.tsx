@@ -27,7 +27,7 @@ export function Preview() {
           borderRadius: "50rem",
           padding: theme.sizes.md,
           zIndex: 500,
-          color: '#fafafa80',
+          color: '#fafafa',
         } : {
             color: theme.colors["text-primary"],
           display: "flex",

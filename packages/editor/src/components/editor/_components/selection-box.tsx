@@ -5,18 +5,18 @@ import { EditorBtns, EditorElement, useEditor } from "../../../provider"
 import { Badge, useTheme } from "@pytsx/ui"
 import { v4 } from 'uuid'
 import { DeleteComponent } from "./delete-component"
+import { ArrowUpDown } from "lucide-react"
 
 type Props = {
   element: EditorElement
   style?: React.CSSProperties
   children: React.ReactNode
   disableOnDrop?: boolean
-  strictStyle?: boolean
 }
 
-export function SelectionBox({ element, style: selectionBoxStyles, children, disableOnDrop, strictStyle }: Props) {
+export function SelectionBox({ element, style: selectionBoxStyles, children, disableOnDrop }: Props) {
   const { state, dispatch } = useEditor()
-  const { id, name, styles } = element
+  const { id, name } = element
   const { theme } = useTheme()
 
   const defaultStyles: React.CSSProperties = {
@@ -25,7 +25,7 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
     backgroundRepeat: 'no-repeat',
     textAlign: 'left',
     opacity: '100%',
-    padding: theme.sizes.md,
+    padding: theme.sizes.sm,
   }
 
   const handleOnDrop = (e: React.DragEvent, type: string) => {
@@ -44,7 +44,6 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
               id: v4(),
               name: 'Text',
               styles: {
-                color: 'black',
                 ...defaultStyles,
               },
               type: 'text',
@@ -105,8 +104,6 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
     e.preventDefault()
   }
 
-
-
   const handleOnClickBody = (e: React.MouseEvent) => {
     e.stopPropagation()
     dispatch({
@@ -117,17 +114,6 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
     })
   }
 
-  const handleDeleteElement = () => {
-    dispatch({
-      type: 'DELETE_ELEMENT',
-      payload: {
-        elementDetails: element,
-      },
-    })
-  }
-
-
-
   const isLiveMode = state.editor.liveMode
   const isEditMode = !isLiveMode
 
@@ -135,17 +121,18 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
   const isSelectedElement = selectedElement.id === id
   const isSelectedElementBody = selectedElement.type === '__body'
 
-
   return (
     <div
       style={{
         position: "relative",
-        border: (state.editor.selectedElement.id === id &&
-          !state.editor.liveMode &&
-          state.editor.selectedElement.type !== '__body')
-          ? theme.borders.primary
-          : "",
-        ...(strictStyle ? {} : styles),
+        ...(isEditMode && (
+          isSelectedElement ? {
+            border: theme.borders.primary,
+            borderRadius: theme.sizes.xs,
+          } : {
+            border: "1px solid transparent",
+          }
+        )),
         ...selectionBoxStyles,
       }}
       onDrop={(e) => handleOnDrop(e, id)}
@@ -157,7 +144,7 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
         style={{
           position: "absolute",
           top: '-26px',
-          left: "-2px",
+          left: "-1px",
         }}
         disabled={!(isSelectedElement && isEditMode)}
       >
@@ -165,11 +152,34 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
       </Badge>
 
       {isSelectedElement && isEditMode && !isSelectedElementBody && (
-        <DeleteComponent handleDelete={handleDeleteElement} />
+        <nav style={{
+          position: "absolute",
+          right: theme.sizes.sm,
+          top: `-${theme.sizes.lg}`,
+          border: theme.borders.primary,
+          background: "transparent",
+          backdropFilter: "blur(8px)",
+          borderRadius: theme.sizes.xs,
+          padding: `${theme.sizes.xs} ${theme.sizes.sm}`,
+          display: "flex",
+          gap: theme.sizes.sm,
+          alignItems: "center",
+          justifyContent: "center",
+          zIndex: 700
+        }}>
+          <DeleteComponent element={element} />
+          <button style={{ padding: theme.sizes.sm, background: theme.colors.card, borderRadius: theme.sizes.xs }}>
+            <ArrowUpDown
+              style={{
+                color: theme.colors["text-primary"],
+                width: theme.sizes.md,
+                height: theme.sizes.md
+              }}
+            />
+          </button>
+        </nav>
       )}
-
       {children}
-
     </div>
   )
 }

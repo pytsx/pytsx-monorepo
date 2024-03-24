@@ -2,7 +2,7 @@ export * from "./actions"
 export type * from "./actions"
 
 import { EditorState } from "..";
-import { EditorAction, addAnElement, deleteAnElement, updateAnElement } from "./actions";
+import { EditorAction, updateEditor, updateHistory } from "./actions";
 import { initialState } from "./initial-state";
 
 
@@ -10,91 +10,31 @@ export const editorReducer = (
   state: EditorState = initialState,
   action: EditorAction
 ): EditorState => {
-
   switch (action.type) {
     case "ADD_ELEMENT":
-      const updatedEditorState = {
-        ...state.editor,
-        elements: addAnElement(state.editor.elements, action),
-      }
-      // Update the history to include the entire updated EditorState
-      const updatedHistory = [
-        ...state.history.history.slice(0, state.history.currentIndex + 1),
-        { ...updatedEditorState }, // Save a copy of the updated state
-      ]
-
-      const newEditorState = {
-        ...state,
-        editor: updatedEditorState,
-        history: {
-          ...state.history,
-          history: updatedHistory,
-          currentIndex: updatedHistory.length - 1,
-        },
-      }
-      return newEditorState
-
     case 'UPDATE_ELEMENT':
-      // Perform your logic to update the element in the state
-      const updatedElements = updateAnElement(state.editor.elements, action)
-
-      const UpdatedElementIsSelected =
-        state.editor.selectedElement.id === action.payload.elementDetails.id
-
-      const updatedEditorStateWithUpdate = {
-        ...state.editor,
-        elements: updatedElements,
-        selectedElement: UpdatedElementIsSelected
-          ? action.payload.elementDetails
-          : {
+    case 'DELETE_ELEMENT':
+      const newEditorState: EditorState["editor"] = updateEditor(state, action)
+      const newHistoryState: EditorState["history"] = updateHistory(state, newEditorState)
+      return {
+        ...state,
+        editor: newEditorState,
+        history: newHistoryState,
+      }
+    case "CHANGE_CLICKED_ELEMENT":
+      return {
+        ...state,
+        editor: {
+          ...state.editor,
+          selectedElement: action.payload.elementDetails || {
             id: '',
             content: [],
             name: '',
             styles: {},
             type: null,
           },
+        }
       }
-
-      const updatedHistoryWithUpdate = [
-        ...state.history.history.slice(0, state.history.currentIndex + 1),
-        { ...updatedEditorStateWithUpdate }, // Save a copy of the updated state
-      ]
-      const updatedEditor = {
-        ...state,
-        editor: updatedEditorStateWithUpdate,
-        history: {
-          ...state.history,
-          history: updatedHistoryWithUpdate,
-          currentIndex: updatedHistoryWithUpdate.length - 1,
-        },
-      }
-      return updatedEditor
-    case 'DELETE_ELEMENT':
-      // Perform your logic to delete the element from the state
-      const updatedElementsAfterDelete = deleteAnElement(
-        state.editor.elements,
-        action
-      )
-      const updatedEditorStateAfterDelete = {
-        ...state.editor,
-        elements: updatedElementsAfterDelete,
-      }
-      const updatedHistoryAfterDelete = [
-        ...state.history.history.slice(0, state.history.currentIndex + 1),
-        { ...updatedEditorStateAfterDelete }, // Save a copy of the updated state
-      ]
-
-      const deletedState = {
-        ...state,
-        editor: updatedEditorStateAfterDelete,
-        history: {
-          ...state.history,
-          history: updatedHistoryAfterDelete,
-          currentIndex: updatedHistoryAfterDelete.length - 1,
-        },
-      }
-      return deletedState
-
     case "TOGGLE_LIVE_MODE":
       const toggleLiveMode: EditorState = {
         ...state,
@@ -136,31 +76,6 @@ export const editorReducer = (
         }
       }
       return loadedData
-    case "CHANGE_CLICKED_ELEMENT":
-      const clickedState = {
-        ...state,
-        editor: {
-          ...state.editor,
-          selectedElement: action.payload.elementDetails || {
-            id: '',
-            content: [],
-            name: '',
-            styles: {},
-            type: null,
-          },
-        },
-        history: {
-          ...state.history,
-          history: [
-            ...state.history.history.slice(0, state.history.currentIndex + 1),
-            { ...state.editor }, // Save a copy of the current editor state
-          ],
-          currentIndex: state.history.currentIndex + 1,
-        },
-      }
-      return clickedState
-
-
     case 'REDO':
       if (state.history.currentIndex < state.history.history.length - 1) {
         const nextIndex = state.history.currentIndex + 1

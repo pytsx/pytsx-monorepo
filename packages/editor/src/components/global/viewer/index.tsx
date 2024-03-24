@@ -2,7 +2,7 @@
 import React from "react"
 import { Recursive } from "../../editor/_components/recursive"
 import { useEditor } from "../../../provider"
-import { size } from "@pytsx/ui"
+import { size, useTheme } from "@pytsx/ui"
 
 type Props = {
   liveMode: boolean
@@ -11,6 +11,7 @@ type Props = {
 
 export function Viewer({ content, liveMode }: Props) {
   const { dispatch, state } = useEditor()
+  const { theme } = useTheme()
   React.useEffect(() => {
     if (content) {
       dispatch({
@@ -23,25 +24,35 @@ export function Viewer({ content, liveMode }: Props) {
     }
   }, [content])
 
+  function getPageDeviceWidth() {
+    switch (state.editor.device) {
+      case "Desktop":
+      default:
+        return "100%";
+      case "Tablet":
+        return theme.screens["screen-md"]
+      case "Mobile":
+        return theme.screens["screen-xs"]
+    }
+  }
+
   return (
 
-    <div
+    <section
       style={{
         /* Center when not in preview/live modes */
         marginLeft: "auto",
         marginRight: "auto",
         width: "100%",
         height: "100%",
-        /* Apply device-specific widths */
-        ...(state.editor.device === "Tablet" && { maxWidth: "850px" }),
-        ...(state.editor.device === "Mobile" && { maxWidth: "420px" }),
-        ...(state.editor.device === "Desktop" && { maxWidth: "100%" }),
-        /* Remove padding for preview/live modes */
-        ...(state.editor.previewMode || state.editor.liveMode ? {
+        ...(state.editor.liveMode ? {
+        /* Remove padding for live mode */
           padding: 0,
         } : {
-            padding: size("sm"),
-            maxHeight: "100%"
+            padding: theme.sizes.xl,
+            maxHeight: "100%",
+            /* Apply device-specific widths */
+            maxWidth: getPageDeviceWidth(),
         }),
       }}
     >
@@ -49,7 +60,7 @@ export function Viewer({ content, liveMode }: Props) {
         state.editor.elements.map((childElement) => (
           <Recursive element={childElement} key={childElement.id} />
         ))}
-    </div>
+    </section>
 
   )
 }
