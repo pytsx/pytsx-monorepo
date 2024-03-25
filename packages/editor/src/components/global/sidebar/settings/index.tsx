@@ -4,7 +4,6 @@ import { useEditor } from "../../../../provider";
 import { DimensionsSettings } from "./sections/dimensions";
 import { DecorationsSettings } from "./sections/decorations";
 import { FlexboxSettings } from "./sections/flexbox";
-import { CustomSettings } from "./sections/custom";
 import { TypographySettings } from "./sections/typography";
 
 export function Settings() {
@@ -31,13 +30,16 @@ export function Settings() {
   }
 
   return (
-    <section
-      style={{ width: "100%" }}
-    >
-      <TypographySettings handleOnChanges={handleOnChanges} />
-      <DimensionsSettings handleOnChanges={handleOnChanges} />
-      <DecorationsSettings handleOnChanges={handleOnChanges} />
-      <FlexboxSettings handleOnChanges={handleOnChanges} />
-    </section>
+    <>
+      {state.editor.selectedElement.type !== "text" ? (
+        <>
+          <DimensionsSettings handleOnChanges={handleOnChanges} />
+          <DecorationsSettings handleOnChanges={handleOnChanges} />
+          <FlexboxSettings handleOnChanges={handleOnChanges} />
+        </>
+      ) : (
+        <TypographySettings handleOnChanges={handleOnChanges} />
+      )}
+    </>
   )
 }

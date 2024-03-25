@@ -1,11 +1,11 @@
 "use client"
 
 import React from "react"
-import { EditorBtns, EditorElement, useEditor } from "../../../provider"
+import { EditorBtns, EditorElement, useEditor } from "../../../../provider"
 import { Badge, useTheme } from "@pytsx/ui"
 import { v4 } from 'uuid'
-import { DeleteComponent } from "./delete-component"
-import { ArrowUpDown } from "lucide-react"
+import { DeleteElement } from "./delete-element"
+import { MoveElement } from "./move-element"
 
 type Props = {
   element: EditorElement
@@ -16,7 +16,7 @@ type Props = {
 
 export function SelectionBox({ element, style: selectionBoxStyles, children, disableOnDrop }: Props) {
   const { state, dispatch } = useEditor()
-  const { id, name } = element
+  const { id, name, content } = element
   const { theme } = useTheme()
 
   const defaultStyles: React.CSSProperties = {
@@ -31,6 +31,12 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
   const handleOnDrop = (e: React.DragEvent, type: string) => {
     e.stopPropagation()
     if (state.editor.liveMode || !!disableOnDrop) return
+    let position = 0
+
+    if (Array.isArray(content)) {
+      const lastPosition = content[content.length - 1] || 0
+      position = lastPosition.position + 1
+    }
 
     const componentType = e.dataTransfer.getData('componentType') as EditorBtns
     switch (componentType) {
@@ -40,13 +46,16 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
           payload: {
             containerId: id,
             elementDetails: {
-              content: { innerText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' },
               id: v4(),
               name: 'Text',
               styles: {
                 ...defaultStyles,
               },
               type: 'text',
+              position: position || 0,
+              content: {
+                innerText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+              },
             },
           },
         })
@@ -62,16 +71,23 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
               name: 'Container',
               styles: { ...defaultStyles, height: "320px" },
               type: 'container',
+              position: position || 0
             },
           }
         })
         break
       case '2Col':
+        const parentId = v4()
         dispatch({
           type: 'ADD_ELEMENT',
           payload: {
             containerId: id,
             elementDetails: {
+              id: parentId,
+              name: 'Two Columns',
+              styles: { ...defaultStyles, display: 'flex' },
+              type: '2Col',
+              position: position || 0,
               content: [
                 {
                   content: [],
@@ -79,6 +95,8 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
                   name: 'Container',
                   styles: { ...defaultStyles, width: '100%' },
                   type: 'container',
+                  position: 0,
+                  parent: parentId
                 },
                 {
                   content: [],
@@ -86,12 +104,10 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
                   name: 'Container',
                   styles: { ...defaultStyles, width: '100%' },
                   type: 'container',
+                  position: 1,
+                  parent: parentId
                 },
               ],
-              id: v4(),
-              name: 'Two Columns',
-              styles: { ...defaultStyles, display: 'flex' },
-              type: '2Col',
             },
           },
         })
@@ -148,7 +164,7 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
         }}
         disabled={!(isSelectedElement && isEditMode)}
       >
-        {name}
+        {name} #{element.position || 0}
       </Badge>
 
       {isSelectedElement && isEditMode && !isSelectedElementBody && (
@@ -162,21 +178,13 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
           borderRadius: theme.sizes.xs,
           padding: `${theme.sizes.xs} ${theme.sizes.sm}`,
           display: "flex",
-          gap: theme.sizes.sm,
+          gap: theme.sizes.xs,
           alignItems: "center",
           justifyContent: "center",
           zIndex: 700
         }}>
-          <DeleteComponent element={element} />
-          <button style={{ padding: theme.sizes.sm, background: theme.colors.card, borderRadius: theme.sizes.xs }}>
-            <ArrowUpDown
-              style={{
-                color: theme.colors["text-primary"],
-                width: theme.sizes.md,
-                height: theme.sizes.md
-              }}
-            />
-          </button>
+          <DeleteElement element={element} />
+          <MoveElement element={element} />
         </nav>
       )}
       {children}

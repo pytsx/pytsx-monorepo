@@ -23,7 +23,9 @@ export type EditorElement = {
   styles: React.CSSProperties
   name: string
   type: EditorBtns
+  position: number
   content: EditorElement[] | { href?: string; innerText?: string; src?: string }
+  parent?: string | null
 }
 
 export interface IEditor {

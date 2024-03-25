@@ -13,50 +13,42 @@ export type EditorAction =
     payload: {
       elementDetails: EditorElement
     }
-  }
-  | {
+  } | {
     type: 'DELETE_ELEMENT'
     payload: {
       elementDetails: EditorElement
     }
-  }
-  | {
+  } | {
+    type: "MOVE_ELEMENT_POSITION"
+    payload: {
+      elementId: string
+      direction: "up" | "down"
+    }
+  } | {
     type: "TOGGLE_LIVE_MODE"
     payload?: {
       value?: boolean
     }
-  }
-  | {
+  } | {
     type: "TOGGLE_PREVIEW_MODE"
-  }
-  | {
+  } | {
     type: "LOAD_DATA"
     payload: {
       elements: EditorElement[]
       withLive: boolean
     }
-  }
-  | {
+  } | {
     type: "CHANGE_CLICKED_ELEMENT"
     payload: {
       elementDetails?:
       | EditorElement
-      | {
-        id: ''
-        content: []
-        name: ''
-        styles: {}
-        type: null
-      }
     }
-  }
-  | {
+  } | {
     type: "SET_PAGE_ID"
     payload: {
       pageId: string
     }
-  }
-  | {
+  } | {
     type: 'CHANGE_DEVICE'
     payload: {
       device: DeviceTypes

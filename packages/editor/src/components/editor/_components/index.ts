@@ -1,5 +1,5 @@
 export * from "./container"
-export * from "./delete-component"
+export * from "./selection-box/delete-element"
 export * from "./recursive"
 export * from "./text"
 export * from "../../global/viewer"

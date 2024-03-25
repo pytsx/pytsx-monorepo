@@ -57,7 +57,7 @@ export function Viewer({ content, liveMode }: Props) {
       }}
     >
       {Array.isArray(state.editor.elements) &&
-        state.editor.elements.map((childElement) => (
+        state.editor.elements.sort((a, b) => (a?.position || 0) - (b?.position || 0)).map((childElement) => (
           <Recursive element={childElement} key={childElement.id} />
         ))}
     </section>

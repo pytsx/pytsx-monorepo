@@ -1,10 +1,20 @@
 export * from "./actions"
 export type * from "./actions"
 
-import { EditorState } from "..";
+import { EditorElement, EditorState } from "..";
 import { EditorAction, updateEditor, updateHistory } from "./actions";
 import { initialState } from "./initial-state";
 
+
+export const emptyEditorElement: EditorElement = {
+  id: '',
+  content: [],
+  name: '',
+  styles: {},
+  type: null,
+  position: 1,
+  parent: null
+}
 
 export const editorReducer = (
   state: EditorState = initialState,
@@ -14,6 +24,7 @@ export const editorReducer = (
     case "ADD_ELEMENT":
     case 'UPDATE_ELEMENT':
     case 'DELETE_ELEMENT':
+    case "MOVE_ELEMENT_POSITION":
       const newEditorState: EditorState["editor"] = updateEditor(state, action)
       const newHistoryState: EditorState["history"] = updateHistory(state, newEditorState)
       return {
@@ -26,13 +37,7 @@ export const editorReducer = (
         ...state,
         editor: {
           ...state.editor,
-          selectedElement: action.payload.elementDetails || {
-            id: '',
-            content: [],
-            name: '',
-            styles: {},
-            type: null,
-          },
+          selectedElement: action.payload.elementDetails || emptyEditorElement,
         }
       }
     case "TOGGLE_LIVE_MODE":

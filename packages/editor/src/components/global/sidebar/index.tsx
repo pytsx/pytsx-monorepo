@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import ComponentsPlaceholders from '../add-component/components-placeholders'
 import { useEditor } from '../../../provider'
 import { SettingsButton } from './settings/settings-button'
 import { Settings } from './settings'
@@ -11,7 +10,6 @@ export type SidebarTabs = "settings" | "components"
 
 export const Sidebar = () => {
   const { state } = useEditor()
-  const [active, setActive] = React.useState<SidebarTabs>("settings")
   const { theme } = useTheme()
   return (
     <aside
@@ -26,7 +24,6 @@ export const Sidebar = () => {
         zIndex: 500,
         overflowY: "auto",
         overflowX: "hidden",
-        paddingTop: theme.sizes['md'],
         paddingBottom: theme.sizes['6xl'],
         ...createScroll(),
       }}
@@ -41,15 +38,12 @@ export const Sidebar = () => {
           style={{
             width: "100%",
             zIndex: 200,
-            padding: size({
-              x: "lg",
-              y: "xs"
-            }),
+            padding: theme.sizes.md,
             borderBottom: theme.borders.muted,
             display: state.editor.previewMode ? "none" : "flex"
           }}
         >
-          <SettingsButton setActive={setActive} active={active} />
+          <SettingsButton />
         </section>
 
         <section
@@ -66,19 +60,18 @@ export const Sidebar = () => {
             style={{
               width: "100%",
               display: "flex",
-              gap: theme.sizes.md,
               height: "100%"
             }}
           >
             <div style={{
-              ...(active !== "settings" && { display: "none" }),
+              gap: theme.sizes.md,
+              display: "flex",
+              flexDirection: "column",
               width: "100%",
             }} >
               <Settings />
             </div>
-            <div style={{ ...(active !== "components" && { display: "none" }) }}>
-              <ComponentsPlaceholders />
-            </div>
+
           </div>
         </section>
 

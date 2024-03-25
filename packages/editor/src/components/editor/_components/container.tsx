@@ -53,7 +53,7 @@ export function Container({ element }: Props) {
       }}>
       {
         Array.isArray(content) &&
-        content.map((childElement) => (
+          content.sort((a, b) => (a?.position || 0) - (b?.position || 0)).map((childElement) => (
           <Recursive
             key={childElement.id}
             element={childElement}

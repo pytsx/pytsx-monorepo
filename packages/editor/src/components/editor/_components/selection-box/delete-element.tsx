@@ -2,9 +2,9 @@
 import { Trash } from "lucide-react";
 import React from "react";
 import { colors, useTheme } from "@pytsx/ui";
-import { EditorElement, useEditor } from "../../../provider";
+import { EditorElement, useEditor } from "../../../../provider";
 
-export function DeleteComponent({ element }: { element: EditorElement }) {
+export function DeleteElement({ element }: { element: EditorElement }) {
   const { dispatch } = useEditor()
   const { theme } = useTheme()
   const { xs, sm, md } = theme.sizes

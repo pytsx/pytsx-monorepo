@@ -17,7 +17,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
         <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm, width: "100%" }}>
           <Typography style={{ userSelect: "none" }}>Text Align</Typography>
           <Select
-            value={state.editor.selectedElement.styles.textAlign}
+            value={state.editor.selectedElement?.styles?.textAlign}
             onValueChange={(e) =>
               handleOnChanges({
                 target: {
