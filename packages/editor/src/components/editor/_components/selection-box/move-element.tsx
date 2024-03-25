@@ -8,16 +8,6 @@ export function MoveElement({ element }: { element: EditorElement }) {
   const { theme } = useTheme()
   const { dispatch, state } = useEditor()
 
-  const moveElement = (type: "up" | "down") => {
-    dispatch({
-      type: "MOVE_ELEMENT_POSITION",
-      payload: {
-        direction: type,
-        elementId: element.id
-      }
-    })
-  }
-
   const styles = {
     button: {
       padding: theme.sizes.sm,
@@ -41,8 +31,14 @@ export function MoveElement({ element }: { element: EditorElement }) {
 
     return (
       <button
-        key={action}
-        onClick={() => moveElement(action)}
+        key={action + "_" + element.id}
+        onClick={() => dispatch({
+          type: "MOVE_ELEMENT_POSITION",
+          payload: {
+            direction: action,
+            elementId: element.id
+          }
+        })}
         style={styles.button}
         disabled={action == "up" && element.position <= 0}
       >

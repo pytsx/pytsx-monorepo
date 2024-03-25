@@ -77,11 +77,13 @@ export const moveElement = (
               position: item.position - 1
             }
           }
+          console.log("UP: ", prevItem, item)            
           return item
         case "down":
           if (nextItem) {
             nextItem.position = item.position
             sortEditorArray[nextIndex] = nextItem
+            console.log("DOWN: ", nextItem, item)
             return {
               ...item,
               position: item.position + 1
