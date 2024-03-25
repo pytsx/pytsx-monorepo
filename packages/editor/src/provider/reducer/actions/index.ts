@@ -68,8 +68,9 @@ export const moveElement = (
 
       switch (action.payload.direction) {
         case "up":
-          if (item.position > 0 && prevItem) {
+          if (item.position >= 0 && prevItem) {
             prevItem.position = item.position
+
             sortEditorArray[prevIndex] = prevItem
             return {
               ...item,
