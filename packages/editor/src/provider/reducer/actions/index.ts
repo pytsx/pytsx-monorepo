@@ -70,8 +70,12 @@ export const moveElement = (
         case "up":
           if (item.position >= 0 && prevItem) {
             prevItem.position = item.position
+            if (prevItem.position == item.position + 1) {
+              prevItem.position++
+            }
 
             sortEditorArray[prevIndex] = prevItem
+
             return {
               ...item,
               position: item.position - 1
