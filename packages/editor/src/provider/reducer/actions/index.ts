@@ -68,14 +68,10 @@ export const moveElement = (
 
       switch (action.payload.direction) {
         case "up":
-          if (item.position >= 0 && prevItem) {
+          if (prevItem) {
             prevItem.position = item.position
-            if (prevItem.position == item.position + 1) {
-              prevItem.position++
-            }
 
             sortEditorArray[prevIndex] = prevItem
-
             return {
               ...item,
               position: item.position - 1
@@ -104,6 +100,11 @@ export const moveElement = (
     }
     return item
   })
+    .sort((a, b) => (a.position || 0) - (b.position || 0))
+    .map((el, index) => {
+      el.position = index
+      return el
+    })
 }
 
 
