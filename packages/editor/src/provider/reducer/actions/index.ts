@@ -91,14 +91,7 @@ export const moveElement = (
   })
 
 
-  sortEditorArray = sortEditorArray
-    .sort((a, b) => (a.position || 0) - (b.position || 0))
-    .map((el, index) => {
-      el.position = index
-      return el
-    })
-
-  console.log(sortEditorArray)
+  console.log(sortEditorArray, editorArray)
 
   return sortEditorArray
 }
