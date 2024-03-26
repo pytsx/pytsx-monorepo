@@ -49,61 +49,57 @@ export const updateAnElement = (
     return item
   })
 }
+
 export const moveElement = (
   editorArray: EditorElement[],
   action: EditorAction
 ): EditorElement[] => {
   if (action.type !== 'MOVE_ELEMENT_POSITION') {
-    throw Error('Tipo de ação inválido: "MOVE_ELEMENT_POSITION" esperado.');
+    throw Error('You sent the wrong action type to the move Element State')
   }
+  const editorMap: Map<string, EditorElement> = new Map()
+  let sortEditorArray = editorArray.sort((a, b) => (a.position || 0) - (b.position || 0))
+  sortEditorArray.forEach(el => editorMap.set(el.id, el))
 
-  // Clonar o array original para evitar mutação
-  const sortedArray = [...editorArray].sort((a, b) => (a.position || 0) - (b.position || 0));
-
-  // Criar um novo array para armazenar os elementos movidos
-  const newEditorArray: EditorElement[] = [];
-
-  for (const item of sortedArray) {
+  sortEditorArray.forEach((item, index) => {
     if (item.id === action.payload.elementId) {
-      const { direction } = action.payload;
-      const newPosition = calculateNewPosition(item.position, direction, sortedArray);
+      const prevIndex = index - 1
+      const prevItem = sortEditorArray[prevIndex]
+      const nextIndex = index + 1
+      const nextItem = sortEditorArray[nextIndex]
 
-      // Mover o elemento para a nova posição
-      newEditorArray.splice(newPosition, 0, {
-        ...item,
-        position: newPosition,
-      });
+      switch (action.payload.direction) {
+        case "down":
+          if (nextItem) {
+            nextItem.position = item.position
+            editorMap.set(nextItem.id, nextItem)
+            editorMap.set(item.id, {
+              ...item,
+              position: item.position + 1
+            })
+
+          }
+        case "up":
+          if (item.position > 0 && prevItem) {
+            prevItem.position = item.position
+            editorMap.set(prevItem.id, prevItem)
+            editorMap.set(item.id, {
+              ...item,
+              position: item.position - 1
+            })
+          }
+      }
     } else if (item.content && Array.isArray(item.content)) {
-      // Mover elementos recursivamente dentro do conteúdo
-      newEditorArray.push({
+      editorMap.set(item.id, {
         ...item,
-        content: moveElement(item.content, action),
-      });
-    } else {
-      // Adicionar elementos sem modificação
-      newEditorArray.push(item);
+        content: moveElement(item.content, action)
+      })
     }
-  }
+  })
 
-  return newEditorArray;
-};
-
-// Função para calcular a nova posição do elemento
-function calculateNewPosition(
-  position: number,
-  direction: 'up' | 'down',
-  sortedArray: EditorElement[]
-): number {
-  const nextIndex = direction === 'down' ? position + 1 : position - 1;
-
-  // Validar se a nova posição está dentro dos limites do array
-  if (nextIndex < 0 || nextIndex >= sortedArray.length) {
-    return position;
-  }
-
-  // Retornar a nova posição
-  return nextIndex;
+  return [...editorMap.values()]
 }
+
 
 export const deleteAnElement = (
   editorArray: EditorElement[],
