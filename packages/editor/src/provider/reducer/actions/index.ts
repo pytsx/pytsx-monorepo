@@ -14,6 +14,8 @@ export const addAnElement = (
   return editorArray.map((item) => {
     if (item.id === action.payload.containerId && Array.isArray(item.content)) {
       const newItem = action.payload.elementDetails
+      newItem.parent = action.payload.containerId
+
       return {
         ...item,
         content: [...item.content, newItem],
@@ -21,7 +23,6 @@ export const addAnElement = (
     } else if (item.content && Array.isArray(item.content)) {
       return {
         ...item,
-        parent: action.payload.containerId,
         content: addAnElement(item.content, action),
       }
     }
@@ -55,49 +56,63 @@ export const moveElement = (
   action: EditorAction
 ): EditorElement[] => {
   if (action.type !== 'MOVE_ELEMENT_POSITION') {
-    throw Error('You sent the wrong action type to the move Element State')
+    throw Error('Você enviou o tipo de ação incorreto para o estado Move Element');
   }
-  let sortEditorArray = editorArray.sort((a, b) => (a.position || 0) - (b.position || 0))
-  sortEditorArray = sortEditorArray.map((item, index) => {
-    if (item.id === action.payload.elementId) {
-      const prevIndex = index - 1
-      const prevItem = sortEditorArray[prevIndex]
-      const nextIndex = index + 1
-      const nextItem = sortEditorArray[nextIndex]
 
-      switch (action.payload.direction) {
-        case "down":
-          if (nextItem) {
-            nextItem.position = item.position
-            sortEditorArray[nextIndex] = nextItem
-            return {
-              ...item,
-              position: item.position + 1
-            }
-          }
-        case "up":
-          if (item.position > 0 && prevItem) {
-            prevItem.position = item.position
-            sortEditorArray[prevIndex] = prevItem
-            return {
-              ...item,
-              position: item.position - 1
-            }
-          }
-        default:
-          return item;
+  // Criar uma cópia para evitar mutação do array original
+  const sortedArray = [...editorArray].sort((a, b) => (a.position || 0) - (b.position || 0));
+
+  return sortedArray.map((item) => {
+    if (item.id === action.payload.elementDetails.parent && item.content && Array.isArray(item.content)) {
+      const { direction, elementDetails } = action.payload;
+
+      // Verificar se o elemento a ser movido existe
+      if (!elementDetails) {
+        return item;
       }
+
+      const indexToMove = item.content.findIndex((el) => el.id === elementDetails.id);
+
+      if (indexToMove === -1) {
+        return item;
+      }
+
+      const nextIndex = indexToMove + 1;
+      const prevIndex = indexToMove - 1;
+
+      // Criar uma cópia do conteúdo para modificação
+      const newContent = [...item.content];
+
+
+      if (direction === 'up' && item.content[prevIndex] && item.content[indexToMove].position > 0) {
+        const oldPosition = indexToMove
+        const newPosition = oldPosition - 1
+
+        newContent[prevIndex].position = oldPosition;
+        newContent[indexToMove].position = newPosition;
+        console.log("UP",
+          "old position: ", oldPosition,
+          "new position: ", newPosition
+        )
+      } else if (direction === 'down' && item.content[nextIndex]) {
+        const oldPosition = indexToMove;
+        const newPosition = oldPosition + 1
+
+        newContent[nextIndex].position = oldPosition
+        newContent[indexToMove].position = newPosition;
+        console.log("DOWN",
+          "old position: ", oldPosition,
+          "new position: ", newPosition
+        )
+      }
+
+      return { ...item, content: newContent };
     } else if (item.content && Array.isArray(item.content)) {
-      return {
-        ...item,
-        content: moveElement(item.content, action),
-      }
+      return { ...item, content: moveElement(item.content, action) };
     }
-    return item
-  })
-
-  return sortEditorArray
-}
+    return item;
+  });
+};
 
 
 export const deleteAnElement = (

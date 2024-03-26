@@ -21,7 +21,7 @@ export type EditorAction =
   } | {
     type: "MOVE_ELEMENT_POSITION"
     payload: {
-      elementId: string
+      elementDetails: EditorElement
       direction: "up" | "down"
     }
   } | {
