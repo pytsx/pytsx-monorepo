@@ -59,12 +59,14 @@ export const moveElement = (
   }
   let sortEditorArray = editorArray.sort((a, b) => (a.position || 0) - (b.position || 0))
 
+
   sortEditorArray = sortEditorArray.map((item, index) => {
     if (item.id === action.payload.elementId) {
       const prevIndex = index - 1
       const prevItem = sortEditorArray[prevIndex]
       const nextIndex = index + 1
       const nextItem = sortEditorArray[nextIndex]
+
       if (action.payload.direction == "down" && nextItem) {
         nextItem.position = item.position
         sortEditorArray[nextIndex] = nextItem
@@ -89,9 +91,6 @@ export const moveElement = (
     }
     return item
   })
-
-
-  console.log(sortEditorArray, editorArray)
 
   return sortEditorArray
 }
