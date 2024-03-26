@@ -1,7 +1,7 @@
 "use client"
 import { ColorType, ITheme, ModeType } from "../provider/interface"
 import { createBorders } from "./border"
-import { colors, createColors } from "./palette"
+import { colors, createColors, createPalette } from "./palette"
 import { createSimpleSizes, createSizes } from "./size"
 
 export * from './palette'
@@ -22,7 +22,8 @@ export const createTheme = (mode: ModeType) => {
       "screen-xl": "1280px",
       "screen-2xl": "1536px",
     },
-    spacing: createSimpleSizes()
+    spacing: createSimpleSizes(),
+    palette: createPalette(mode)
   } as ITheme
 }
 

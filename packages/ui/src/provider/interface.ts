@@ -12,6 +12,18 @@ export type SizeType =
   | "xl"
   | SizeExtraLargeType
 
+export type BaseColors =
+  | "red"
+  | "green"
+  | "blue"
+  | "yellow"
+  | "orange"
+  | "violet"
+  | "gray"
+
+export type PaletteGradient = 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900 | 1000
+export type IPaletteColor<T extends number = PaletteGradient> = Record<BaseColors, Record<T, string>> 
+
 export type ColorType =
   | "primary"
   | "secondary"
@@ -24,6 +36,7 @@ export type ColorType =
   | "input"
   | "text-primary"
 
+
 type ScreenTypes = "screen-xs" | "screen-sm" | "screen-md" | "screen-lg" | "screen-xl" | "screen-2xl"
 
 export interface ITheme {
@@ -31,7 +44,8 @@ export interface ITheme {
   borders: Record<ColorType, string>,
   sizes: Record<SizeType, string>,
   screens: Record<ScreenTypes, string>
-  spacing: Record<number, string>
+  spacing: Record<number, string>,
+  palette: IPaletteColor
 }
 
 export interface IThemeContext {

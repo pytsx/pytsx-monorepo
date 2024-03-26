@@ -5,3 +5,4 @@ export * from './icon-button'
 export * from './typography'
 export * from "./select"
 export * from "./tabs"
+export * from "./palette"

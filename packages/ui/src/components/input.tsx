@@ -11,9 +11,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <input
         style={{
-          background: theme.colors.input,
+          background: theme.colors.card,
           border: theme.borders.muted,
-          padding: `${theme.sizes.sm} ${theme.sizes.lg}`,
+          padding: `${theme.sizes.xs} ${theme.sizes.sm}`,
           color: theme.colors["text-primary"],
           borderRadius: theme.sizes.xs,
           width: "100%",
