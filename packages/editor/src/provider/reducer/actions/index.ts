@@ -105,6 +105,11 @@ export const moveElement = (
     }
     return item
   })
+    .sort((a, b) => (a.position || 0) - (b.position || 0))
+    .map((el, index) => {
+      el.position = index
+      return el
+    })
 }
 
 
