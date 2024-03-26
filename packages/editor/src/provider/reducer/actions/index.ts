@@ -63,14 +63,12 @@ export const moveElement = (
   return sortEditorArray.map((item, index) => {
     if (item.id === action.payload.elementId) {
       const prevIndex = index - 1
-      const prevItem = sortEditorArray[prevIndex]
       const nextIndex = index + 1
-      const nextItem = sortEditorArray[nextIndex]
 
       switch (action.payload.direction) {
         case "up":
-          if (prevItem) {
-            console.log("UP: ", prevItem, item)
+          if (prevIndex >= 0) {
+            const prevItem = sortEditorArray[prevIndex]
             prevItem.position = item.position
             sortEditorArray[prevIndex] = prevItem
             return {
@@ -80,8 +78,8 @@ export const moveElement = (
           }
           return item
         case "down":
-          if (nextItem) {
-            console.log("DOWN: ", nextItem, item)
+          if (nextIndex < sortEditorArray.length) {
+            const nextItem = sortEditorArray[nextIndex]
             nextItem.position = item.position
             sortEditorArray[nextIndex] = nextItem
             return {
@@ -102,7 +100,6 @@ export const moveElement = (
     }
     return item
   })
-
 }
 
 
