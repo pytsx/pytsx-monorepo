@@ -3,22 +3,23 @@ import React from "react";
 import { SettingsProps } from "./interface";
 import { useEditor } from "../../../../../provider";
 import { AlignVerticalJustifyCenter, ChevronsLeftRightIcon, LucideImageDown } from "lucide-react";
-import { Input, Typography } from "@pytsx/ui";
+import { Input, Typography, useTheme } from "@pytsx/ui";
 import { SettingsContainer } from "./settings-container";
 
 export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
+  const { theme } = useTheme()
 
   return (
     <SettingsContainer>
       <Typography className="!no-underline">
         Decorations
       </Typography>
-      <div className="px-2 flex flex-col gap-4">
+      <div style={{ display: "flex", padding: theme.sizes.xs, flexDirection: "column", gap: theme.sizes.sm }}>
         <div>
           <Typography>Opacity</Typography>
-          <div className="flex items-center justify-end">
-            <small className="p-2">
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
+            <small style={{ padding: theme.sizes.sm }}>
               {typeof state.editor.selectedElement.styles?.opacity ===
                 'number'
                 ? state.editor.selectedElement.styles?.opacity
@@ -45,7 +46,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
                 ? state.editor.selectedElement.styles?.opacity
                 : parseFloat(
                   (
-                    state.editor.selectedElement.styles?.opacity || '0'
+                    state.editor.selectedElement.styles?.opacity || '100'
                   ).replace('%', '')
                 ) || 0
             }
@@ -55,7 +56,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
         </div>
         <div>
           <Typography>Border Radius</Typography>
-          <div className="flex items-center justify-end">
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
             <small className="">
               {typeof state.editor.selectedElement.styles?.borderRadius ===
                 'number'
@@ -92,12 +93,13 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
             step={1}
           />
         </div>
-        <div className="flex flex-col gap-2">
+        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
           <Typography>Background Color</Typography>
-          <div className="flex  border-[1px] rounded-md overflow-clip">
+          <div style={{ display: "flex", border: theme.borders.input, borderRadius: theme.sizes.xs, overflow: "clip" }}>
             <div
-              className="w-12 "
               style={{
+                width: theme.spacing[8],
+                height: "100%",
                 backgroundColor:
                   state.editor.selectedElement.styles.backgroundColor,
               }}
@@ -105,18 +107,23 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
             <Input
               placeholder="#HFI245"
               className="!border-y-0 rounded-none !border-r-0 mr-2"
+              style={{
+                border: "none"
+              }}
               id="backgroundColor"
+              type="color"
               onChange={handleOnChanges}
               value={state.editor.selectedElement.styles.backgroundColor}
             />
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
           <Typography>Background Image</Typography>
-          <div className="flex  border-[1px] rounded-md overflow-clip">
+          <div style={{ display: "flex", border: theme.borders.input, borderRadius: theme.sizes.xs, overflow: "clip" }}>
             <div
-              className="w-12 "
               style={{
+                width: theme.spacing[8],
+                height: "100%",
                 backgroundImage:
                   state.editor.selectedElement.styles.backgroundImage,
               }}
@@ -130,7 +137,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
             />
           </div>
         </div>
-        <div className="flex flex-col gap-2">
+        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
           <Typography>Image Position</Typography>
           <div
           // onValueChange={(e) =>

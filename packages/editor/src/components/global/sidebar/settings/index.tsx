@@ -11,7 +11,8 @@ export function Settings() {
 
   const handleOnChanges = (e: any) => {
     const styleSettings = e.target.id
-    let value = e.target.value
+    let value = e.target.value 
+
     const styleObject = {
       [styleSettings]: value,
     }

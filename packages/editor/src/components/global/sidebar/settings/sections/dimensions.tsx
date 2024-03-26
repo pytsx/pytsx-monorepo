@@ -2,24 +2,25 @@
 import React from "react"
 import { SettingsProps } from "./interface"
 import { useEditor } from "../../../../../provider"
-import { Input, Typography } from "@pytsx/ui"
+import { Input, Typography, useTheme } from "@pytsx/ui"
 import { SettingsContainer } from "./settings-container"
 
 
 export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
+  const { theme } = useTheme()
 
 
   return (
     <SettingsContainer>
-      <Typography className="!no-underline">
+      <Typography >
         Dimensions
       </Typography>
-      <div className='px-2' >
-        <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-4 flex-col">
-              <div className="flex gap-4">
+      <div style={{ padding: `0 ${theme.sizes.xs}` }} >
+        <div style={{ display: "flex", padding: theme.sizes.xs, flexDirection: "column" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm }}>
+              <div style={{ display: "flex", gap: theme.sizes.sm }}>
                 <div>
                   <Typography >Height</Typography>
                   <Input
@@ -85,10 +86,10 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
+          <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
             <Typography>Padding px</Typography>
-            <div className="flex gap-4 flex-col">
-              <div className="flex gap-4">
+            <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm }}>
+              <div style={{ display: "flex", gap: theme.sizes.sm }}>
                 <div>
                   <Typography >Top</Typography>
                   <Input
@@ -108,7 +109,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                   />
                 </div>
               </div>
-              <div className="flex gap-4">
+              <div style={{ display: "flex", gap: theme.sizes.sm }}>
                 <div>
                   <Typography >Left</Typography>
                   <Input
