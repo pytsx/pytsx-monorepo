@@ -4,6 +4,7 @@ import React from "react";
 import { Recursive } from "./recursive";
 import { createScroll, useTheme } from "@pytsx/ui";
 import { SelectionBox } from "./selection-box";
+import { v4 } from "uuid"
 
 type Props = { element: EditorElement }
 
@@ -55,7 +56,7 @@ export function Container({ element }: Props) {
         Array.isArray(content) &&
           content.sort((a, b) => (a?.position || 0) - (b?.position || 0)).map((childElement) => (
           <Recursive
-            key={childElement.id}
+              key={childElement.id + v4()}
             element={childElement}
           />
         ))

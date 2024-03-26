@@ -8,6 +8,16 @@ export function MoveElement({ element }: { element: EditorElement }) {
   const { theme } = useTheme()
   const { dispatch, state } = useEditor()
 
+  const moveElement = (type: "up" | "down") => {
+    dispatch({
+      type: "MOVE_ELEMENT_POSITION",
+      payload: {
+        direction: type,
+        elementId: element.id
+      }
+    })
+  }
+
   const styles = {
     button: {
       padding: theme.sizes.sm,
@@ -22,28 +32,19 @@ export function MoveElement({ element }: { element: EditorElement }) {
     }
   }
 
-  return (["up", "down"] as const).map(action => {
-    const Icons: Record<string, LucideIcon> = {
-      up: ArrowUp,
-      down: ArrowDown
-    }
-    const Icon = Icons[action]
-
-    return (
-      <button
-        key={action + "_" + element.id}
-        onClick={() => dispatch({
-          type: "MOVE_ELEMENT_POSITION",
-          payload: {
-            direction: action,
-            elementId: element.id
-          }
-        })}
-        style={styles.button}
-        disabled={action == "up" && element.position <= 0}
-      >
-        <Icon style={styles.icon} />
-      </button>
-    )
-  })
+  return <>
+    <button
+      onClick={() => moveElement("up")}
+      style={styles.button}
+      disabled={element.position <= 0}
+    >
+      <ArrowUp style={styles.icon} />
+    </button>
+    <button
+      onClick={() => moveElement("down")}
+      style={styles.button}
+    >
+      <ArrowDown style={styles.icon} />
+    </button>
+  </>
 }
