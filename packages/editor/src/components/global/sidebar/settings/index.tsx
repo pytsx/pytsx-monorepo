@@ -10,15 +10,14 @@ export function Settings() {
   const { state, dispatch } = useEditor()
 
   const handleOnChanges = (e: any) => {
-    const styleSettings = e.target.id
+    const styleSettings: string = e.target.id
     let value: string = e.target.value
 
-    const pxInputs = ["margin", "padding", "height", "width"]
+    const pxInputs = ["margin", "padding", "height", "width", "top", "left", "right", "bottom"]
+    const pxLabel = ["p", "px", "ppx", "pxx", "x"]
     if (pxInputs.includes(styleSettings)) {
-      if (!value.endsWith("px")) {
+      if (!pxLabel.includes(value)) {
         value = value.concat("px")
-      } else if (value.endsWith("%")) {
-        value = value
       }
     }
 

@@ -9,8 +9,6 @@ import { SettingsContainer } from "./settings-container"
 export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
   const { theme } = useTheme()
-
-
   return (
     <SettingsContainer>
       <Typography >
