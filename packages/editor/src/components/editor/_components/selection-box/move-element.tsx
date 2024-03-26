@@ -34,14 +34,26 @@ export function MoveElement({ element }: { element: EditorElement }) {
 
   return <>
     <button
-      onClick={() => moveElement("up")}
+      onClick={() => dispatch({
+        type: "MOVE_ELEMENT_POSITION",
+        payload: {
+          direction: "up",
+          elementId: element.id
+        }
+      })}
       style={styles.button}
       disabled={element.position <= 0}
     >
       <ArrowUp style={styles.icon} />
     </button>
     <button
-      onClick={() => moveElement("down")}
+      onClick={() => dispatch({
+        type: "MOVE_ELEMENT_POSITION",
+        payload: {
+          direction: "down",
+          elementId: element.id
+        }
+      })}
       style={styles.button}
     >
       <ArrowDown style={styles.icon} />
