@@ -49,54 +49,61 @@ export const updateAnElement = (
     return item
   })
 }
-
 export const moveElement = (
   editorArray: EditorElement[],
   action: EditorAction
 ): EditorElement[] => {
   if (action.type !== 'MOVE_ELEMENT_POSITION') {
-    throw Error('You sent the wrong action type to the move Element State')
+    throw Error('Tipo de ação inválido: "MOVE_ELEMENT_POSITION" esperado.');
   }
-  let sortEditorArray = editorArray.sort((a, b) => (a.position || 0) - (b.position || 0))
-  return sortEditorArray.map((item, index) => {
-    if (item.id === action.payload.elementId) {
-      const prevIndex = index - 1
-      const prevItem = sortEditorArray[prevIndex]
-      const nextIndex = index + 1
-      const nextItem = sortEditorArray[nextIndex]
 
-      switch (action.payload.direction) {
-        case "down":
-          if (nextItem) {
-            nextItem.position = item.position
-            sortEditorArray[nextIndex] = nextItem
-            return {
-              ...item,
-              position: item.position + 1
-            }
-          }
-        case "up":
-          if (item.position > 0 && prevItem) {
-            prevItem.position = item.position
-            sortEditorArray[prevIndex] = prevItem
-            return {
-              ...item,
-              position: item.position - 1
-            }
-          }
-        default:
-          return item;
-      }
+  // Clonar o array original para evitar mutação
+  const sortedArray = [...editorArray].sort((a, b) => (a.position || 0) - (b.position || 0));
+
+  // Criar um novo array para armazenar os elementos movidos
+  const newEditorArray: EditorElement[] = [];
+
+  for (const item of sortedArray) {
+    if (item.id === action.payload.elementId) {
+      const { direction } = action.payload;
+      const newPosition = calculateNewPosition(item.position, direction, sortedArray);
+
+      // Mover o elemento para a nova posição
+      newEditorArray.splice(newPosition, 0, {
+        ...item,
+        position: newPosition,
+      });
     } else if (item.content && Array.isArray(item.content)) {
-      return {
+      // Mover elementos recursivamente dentro do conteúdo
+      newEditorArray.push({
         ...item,
         content: moveElement(item.content, action),
-      }
+      });
+    } else {
+      // Adicionar elementos sem modificação
+      newEditorArray.push(item);
     }
-    return item
-  })
-}
+  }
 
+  return newEditorArray;
+};
+
+// Função para calcular a nova posição do elemento
+function calculateNewPosition(
+  position: number,
+  direction: 'up' | 'down',
+  sortedArray: EditorElement[]
+): number {
+  const nextIndex = direction === 'down' ? position + 1 : position - 1;
+
+  // Validar se a nova posição está dentro dos limites do array
+  if (nextIndex < 0 || nextIndex >= sortedArray.length) {
+    return position;
+  }
+
+  // Retornar a nova posição
+  return nextIndex;
+}
 
 export const deleteAnElement = (
   editorArray: EditorElement[],
