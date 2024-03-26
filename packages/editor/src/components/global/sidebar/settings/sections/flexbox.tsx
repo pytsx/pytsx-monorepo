@@ -115,7 +115,7 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
           </TabsList>
         </Tabs>
 
-        <div style={{ display: "flex", alignItems: "center", gap: theme.spacing[2] }}>
+        <div style={{ display: "flex", alignItems: "center", width: "100%", gap: theme.sizes.sm }}>
           <Typography >Flex</Typography>
           <Input
             style={{
@@ -138,7 +138,7 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
         <div>
           <Typography > Direction</Typography>
           <Input
-            placeholder="px"
+            placeholder="row"
             id="flexDirection"
             onChange={handleOnChanges}
             value={state.editor.selectedElement.styles.flexDirection}

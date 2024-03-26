@@ -17,9 +17,9 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
       </Typography>
       <div style={{ display: "flex", padding: theme.sizes.xs, flexDirection: "column", gap: theme.sizes.sm }}>
         <div>
-          <Typography>Opacity</Typography>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
-            <small style={{ padding: theme.sizes.sm }}>
+          <span style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
+            <Typography>Opacity</Typography>
+            <Typography style={{ padding: theme.sizes.sm }}>
               {typeof state.editor.selectedElement.styles?.opacity ===
                 'number'
                 ? state.editor.selectedElement.styles?.opacity
@@ -29,8 +29,8 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
                   ).replace('%', '')
                 ) || 0}
               %
-            </small>
-          </div>
+            </Typography>
+          </span>
           <Input
             type="range"
             onChange={(e) => {
@@ -55,9 +55,10 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
           />
         </div>
         <div>
+          <span style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
+
           <Typography>Border Radius</Typography>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "end" }}>
-            <small className="">
+            <Typography className="">
               {typeof state.editor.selectedElement.styles?.borderRadius ===
                 'number'
                 ? state.editor.selectedElement.styles?.borderRadius
@@ -67,8 +68,8 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
                   ).replace('px', '')
                 ) || 0}
               px
-            </small>
-          </div>
+            </Typography>
+          </span>
           <Input
             type='range'
             onChange={(e) => {
@@ -137,7 +138,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
             />
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
+        {/* <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
           <Typography>Image Position</Typography>
           <div
           // onValueChange={(e) =>
@@ -171,7 +172,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
               </span>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </SettingsContainer>
   )

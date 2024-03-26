@@ -25,7 +25,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                   <Typography >Height</Typography>
                   <Input
                     id="height"
-                    placeholder="px"
+                    placeholder="0"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.height}
                   />
@@ -33,7 +33,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 <div>
                   <Typography >Width</Typography>
                   <Input
-                    placeholder="px"
+                    placeholder="0"
                     id="width"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.width}
@@ -42,14 +42,14 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
               </div>
             </div>
 
-            <Typography>Margin px</Typography>
-            <div className="flex gap-4 flex-col">
-              <div className="flex gap-4">
+            <Typography>Margin</Typography>
+            <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm }}>
+              <div style={{ display: "flex", gap: theme.sizes.sm }}>
                 <div>
                   <Typography >Top</Typography>
                   <Input
                     id="marginTop"
-                    placeholder="px"
+                    placeholder="0"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.marginTop}
                   />
@@ -57,18 +57,18 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 <div>
                   <Typography >Bottom</Typography>
                   <Input
-                    placeholder="px"
+                    placeholder="0"
                     id="marginBottom"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.marginBottom}
                   />
                 </div>
               </div>
-              <div className="flex gap-4">
+              <div style={{ display: "flex", gap: theme.sizes.sm }}>
                 <div>
                   <Typography >Left</Typography>
                   <Input
-                    placeholder="px"
+                    placeholder="0"
                     id="marginLeft"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.marginLeft}
@@ -77,7 +77,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 <div>
                   <Typography >Right</Typography>
                   <Input
-                    placeholder="px"
+                    placeholder="0"
                     id="marginRight"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.marginRight}
@@ -87,13 +87,13 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
             </div>
           </div>
           <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
-            <Typography>Padding px</Typography>
+            <Typography>Padding</Typography>
             <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm }}>
               <div style={{ display: "flex", gap: theme.sizes.sm }}>
                 <div>
                   <Typography >Top</Typography>
                   <Input
-                    placeholder="px"
+                    placeholder="0"
                     id="paddingTop"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.paddingTop}
@@ -102,7 +102,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 <div>
                   <Typography >Bottom</Typography>
                   <Input
-                    placeholder="px"
+                    placeholder="0"
                     id="paddingBottom"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.paddingBottom}
@@ -113,7 +113,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 <div>
                   <Typography >Left</Typography>
                   <Input
-                    placeholder="px"
+                    placeholder="0"
                     id="paddingLeft"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.paddingLeft}
@@ -122,7 +122,7 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                 <div>
                   <Typography >Right</Typography>
                   <Input
-                    placeholder="px"
+                    placeholder="0"
                     id="paddingRight"
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.paddingRight}

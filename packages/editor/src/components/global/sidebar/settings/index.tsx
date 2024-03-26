@@ -11,7 +11,16 @@ export function Settings() {
 
   const handleOnChanges = (e: any) => {
     const styleSettings = e.target.id
-    let value = e.target.value 
+    let value: string = e.target.value
+
+    const pxInputs = ["margin", "padding", "height", "width"]
+    if (pxInputs.includes(styleSettings)) {
+      if (!value.endsWith("px")) {
+        value = value.concat("px")
+      } else if (value.endsWith("%")) {
+        value = value
+      }
+    }
 
     const styleObject = {
       [styleSettings]: value,

@@ -57,11 +57,8 @@ export const moveElement = (
   if (action.type !== 'MOVE_ELEMENT_POSITION') {
     throw Error('You sent the wrong action type to the move Element State')
   }
-  const editorMap: Map<string, EditorElement> = new Map()
   let sortEditorArray = editorArray.sort((a, b) => (a.position || 0) - (b.position || 0))
-  sortEditorArray.forEach(el => editorMap.set(el.id, el))
-
-  sortEditorArray.forEach((item, index) => {
+  sortEditorArray = sortEditorArray.map((item, index) => {
     if (item.id === action.payload.elementId) {
       const prevIndex = index - 1
       const prevItem = sortEditorArray[prevIndex]
@@ -72,32 +69,34 @@ export const moveElement = (
         case "down":
           if (nextItem) {
             nextItem.position = item.position
-            editorMap.set(nextItem.id, nextItem)
-            editorMap.set(item.id, {
+            sortEditorArray[nextIndex] = nextItem
+            return {
               ...item,
               position: item.position + 1
-            })
-
+            }
           }
         case "up":
           if (item.position > 0 && prevItem) {
             prevItem.position = item.position
-            editorMap.set(prevItem.id, prevItem)
-            editorMap.set(item.id, {
+            sortEditorArray[prevIndex] = prevItem
+            return {
               ...item,
               position: item.position - 1
-            })
+            }
           }
+        default:
+          return item;
       }
     } else if (item.content && Array.isArray(item.content)) {
-      editorMap.set(item.id, {
+      return {
         ...item,
-        content: moveElement(item.content, action)
-      })
+        content: moveElement(item.content, action),
+      }
     }
+    return item
   })
 
-  return [...editorMap.values()]
+  return sortEditorArray
 }
 
 
