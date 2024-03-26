@@ -58,49 +58,52 @@ export const moveElement = (
     throw Error('You sent the wrong action type to the move Element State')
   }
 
-  const sortEditorArray = editorArray.sort((a, b) => (a.position || 0) - (b.position || 0))
+    // Crie uma cópia do array de editorArray
+    let sortEditorArray = [...editorArray].sort((a, b) => (a.position || 0) - (b.position || 0))
 
-  return sortEditorArray.map((item, index) => {
-    if (item.id === action.payload.elementId) {
-      const prevIndex = index - 1
-      const nextIndex = index + 1
+    sortEditorArray = sortEditorArray.map((item, index) => {
+      if (item.id === action.payload.elementId) {
+        const prevIndex = index - 1
+        const nextIndex = index + 1
 
-      switch (action.payload.direction) {
-        case "up":
-          if (prevIndex >= 0) {
-            const prevItem = sortEditorArray[prevIndex]
-            prevItem.position = item.position
-            sortEditorArray[prevIndex] = prevItem
-            return {
-              ...item,
-              position: item.position - 1
+        switch (action.payload.direction) {
+          case "up":
+            if (prevIndex >= 0) {
+              const prevItem = sortEditorArray[prevIndex]
+              prevItem.position = item.position
+              sortEditorArray[prevIndex] = prevItem
+              return {
+                ...item,
+                position: item.position - 1
+              }
             }
-          }
-          return item
-        case "down":
-          if (nextIndex < sortEditorArray.length) {
-            const nextItem = sortEditorArray[nextIndex]
-            nextItem.position = item.position
-            sortEditorArray[nextIndex] = nextItem
-            return {
-              ...item,
-              position: item.position + 1
+            return item
+          case "down":
+            if (nextIndex < sortEditorArray.length) {
+              const nextItem = sortEditorArray[nextIndex]
+              nextItem.position = item.position
+              sortEditorArray[nextIndex] = nextItem
+              return {
+                ...item,
+                position: item.position + 1
+              }
             }
-          }
-          return item
-        default:
-          return item
+            return item
+          default:
+            return item
+        }
+      } else if (item.content && Array.isArray(item.content)) {
+        return {
+          ...item,
+          content: moveElement(item.content, action),
+        }
       }
+      return item
+    })
 
-    } else if (item.content && Array.isArray(item.content)) {
-      return {
-        ...item,
-        content: moveElement(item.content, action),
-      }
-    }
-    return item
-  })
-}
+    // Retorne a cópia modificada do array editorArray
+    return sortEditorArray
+  }
 
 
 export const deleteAnElement = (
