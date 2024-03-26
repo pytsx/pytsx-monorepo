@@ -57,46 +57,30 @@ export const moveElement = (
   if (action.type !== 'MOVE_ELEMENT_POSITION') {
     throw Error('You sent the wrong action type to the move Element State')
   }
-  const sortEditorArray = editorArray.sort((a, b) => (a.position || 0) - (b.position || 0))
+  let sortEditorArray = editorArray.sort((a, b) => (a.position || 0) - (b.position || 0))
 
-  return sortEditorArray.map((item, index) => {
+  sortEditorArray = sortEditorArray.map((item, index) => {
     if (item.id === action.payload.elementId) {
       const prevIndex = index - 1
       const prevItem = sortEditorArray[prevIndex]
       const nextIndex = index + 1
       const nextItem = sortEditorArray[nextIndex]
-
-      switch (action.payload.direction) {
-        case "down":
-          if (nextItem) {
-            console.log("DOWN: ", item)
-            nextItem.position = item.position
-            sortEditorArray[nextIndex] = nextItem
-            return {
-              ...item,
-              position: item.position + 1
-            }
-          }
-          return item
-
-        case "up":
-          if (item.position > 0 && prevItem) {
-            prevItem.position = item.position
-            sortEditorArray[prevIndex] = prevItem
-
-            console.log("UP: ", item)
-            console.log("PREV: ", prevItem)
-
-            return {
-              ...item,
-              position: item.position - 1
-            }
-          }
-          return item
-        default:
-          return item
+      if (action.payload.direction == "down" && nextItem) {
+        nextItem.position = item.position
+        sortEditorArray[nextIndex] = nextItem
+        return {
+          ...item,
+          position: item.position + 1
+        }
+      } else if (action.payload.direction == "up" && item.position > 0 && prevItem) {
+        prevItem.position = item.position
+        sortEditorArray[prevIndex] = prevItem
+        return {
+          ...item,
+          position: item.position - 1
+        }
       }
-
+      return item
     } else if (item.content && Array.isArray(item.content)) {
       return {
         ...item,
@@ -105,11 +89,18 @@ export const moveElement = (
     }
     return item
   })
+
+
+  sortEditorArray = sortEditorArray
     .sort((a, b) => (a.position || 0) - (b.position || 0))
     .map((el, index) => {
       el.position = index
       return el
     })
+
+  console.log(sortEditorArray)
+
+  return sortEditorArray
 }
 
 
