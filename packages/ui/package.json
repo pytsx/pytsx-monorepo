@@ -1,6 +1,6 @@
 {
   "name": "@pytsx/ui",
-  "version": "0.0.61",
+  "version": "0.0.87",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

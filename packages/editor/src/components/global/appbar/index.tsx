@@ -22,6 +22,8 @@ export function Appbar() {
       position: "relative",
       borderBottom: state.editor.liveMode ? "" : theme.borders.muted,
       background: theme.colors.card,
+      display: "flex",
+      alignItems: "center"
     }}>
       <div style={{
         height: "fit-content",

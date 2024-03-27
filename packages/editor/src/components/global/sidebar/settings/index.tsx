@@ -36,7 +36,7 @@ export function Settings() {
     <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.md }}>
       {state.editor.selectedElement.type !== "text" ? (
         <>
-          <DimensionsSettings handleOnChanges={handleOnChanges} />
+          <DimensionsSettings />
           <DecorationsSettings handleOnChanges={handleOnChanges} />
           <FlexboxSettings handleOnChanges={handleOnChanges} />
         </>

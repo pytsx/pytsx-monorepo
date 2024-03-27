@@ -1,16 +1,15 @@
 "use client"
-import { Input, Typography, useTheme } from "@pytsx/ui";
 import { LucideIcon, MaximizeIcon, Minimize } from "lucide-react";
 import React from "react";
-
-interface IInputBase extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string
-}
+import { useTheme } from "../provider";
+import { Input, InputProps } from "./input";
+import { Typography } from "./typography";
+import { IconButton } from "./icon-button";
 
 interface IInput {
   label: string
-  mainInput: IInputBase
-  multipleInputs: IInputBase[]
+  mainInput: InputProps | InputProps[]
+  multipleInputs: InputProps[]
 }
 
 
@@ -39,30 +38,30 @@ export const InputMultifield = React.forwardRef<HTMLInputElement, IInput>((props
         width: "100%",
       }}>
         <Typography style={{ userSelect: "none", textTransform: "capitalize" }}>{label}</Typography>
-        <Icon
-          onClick={() => setOpen(prev => !prev)}
-          style={{
-            width: theme.spacing[6],
-            height: theme.spacing[6],
-            color: theme.colors["text-primary"],
-            cursor: "pointer"
-          }}
-        />
+        <IconButton active={open} onClick={() => setOpen(prev => !prev)}>
+          <Icon
+            height={theme.sizes.lg}
+            width={theme.sizes.lg}
+          />
+        </IconButton>
       </div>
-      {!open && <Input  {...mainInput} />}
-      {open && <div style={{
+      {<div style={{
         display: "grid",
         gridTemplateColumns: "repeat(2, 1fr)",
         gridAutoRows: "auto",
         gridAutoFlow: "row dense",
-        gap: theme.sizes.xs,
+        gap: theme.sizes.sm,
       }}>
         {
-          multipleInputs.map(prop => (
-            <label htmlFor={prop.id + prop.label} key={prop.id + prop.label}>
-              <Typography style={{ userSelect: "none", fontSize: ".8rem" }}>{prop.label}</Typography>
-              <Input autoFocus aria-label={prop.id} key={prop.id + prop.label}  {...prop} />
-            </label>
+          !open && (!Array.isArray(mainInput)
+            ? <Input  {...mainInput} />
+            : mainInput.map((prop) => (
+              <Input aria-label={prop.id} key={prop.id} {...prop} />
+            )))
+        }
+        {
+          open && multipleInputs.map((prop, index) => (
+            <Input autoFocus={index == 0 ? true : false} aria-label={prop.id} key={prop.id}  {...prop} />
           ))
         }
       </div>}

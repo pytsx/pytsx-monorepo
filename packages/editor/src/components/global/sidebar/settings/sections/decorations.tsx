@@ -91,9 +91,9 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
             step={1}
           />
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm }}>
           <Typography>Background Color</Typography>
-          <div style={{ display: "flex", border: theme.borders.input, borderRadius: theme.sizes.xs, overflow: "clip" }}>
+        <div style={{ display: "flex" }}>
             <div
               style={{
                 width: theme.spacing[8],
@@ -117,7 +117,7 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
           <Typography>Background Image</Typography>
-          <div style={{ display: "flex", border: theme.borders.input, borderRadius: theme.sizes.xs, overflow: "clip" }}>
+        <div style={{ display: "flex" }}>
             <div
               style={{
                 width: theme.spacing[8],

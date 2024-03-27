@@ -52,7 +52,7 @@ export const createColors = (mode: ModeType = "system") => {
     warning: "#FBBC05",
     success: "#34A853",
     background: mode == "dark" ? "#000000" : "#ffffff",
-    muted: mode == "dark" ? "#1d1d1d32" : "#4d4d4d32",
+    muted: mode == "dark" ? "#1d1d1d50" : "#4d4d4d50",
     input: palette.gray[100],
     "text-primary": mode == "dark" ? "#fafafaaf" : "#1d1d1daf",
   }

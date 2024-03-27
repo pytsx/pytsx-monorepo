@@ -25,9 +25,12 @@ const basesizes = (factor: number = sizefactor): Record<SizeType, number> => {
   for (let i = 1; i < sizeKeys.length; i++) {
     finalSizes[sizeKeys[i - 1]] = factor * i
   }
+  finalSizes["2xs"] = factor / 2
 
   return finalSizes
 }
+
+
 
 export const obtainSize = (size: SizeType, factor: number = sizefactor) => {
   return basesizes(factor)[size]
@@ -48,7 +51,7 @@ export const size = (option?: SizeProps | SizeType, factor?: number): string => 
 
 
 export const createSizes = (factor: number = sizefactor): Record<SizeType, string> => {
-  const values: SizeType[] = ["xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"]
+  const values: SizeType[] = ["2xs", "xs", "sm", "md", "lg", "xl", "2xl", "3xl", "4xl", "5xl", "6xl"]
   const response: Record<SizeType, string> = {} as Record<SizeType, string>
   for (let size of values) {
     response[size] = obtainSize(size, factor).toString().concat("rem")

@@ -21,9 +21,8 @@ export function AddComponents() {
           top: "106%",
           border: theme.borders.muted,
           left: "2px",
-          background: theme.palette.gray[100],
-          backdropFilter: "blur(8px)",
-          borderRadius: theme.sizes.xs,
+          background: theme.colors.card,
+          borderRadius: theme.sizes["2xs"],
           zIndex: 600,
           display: "flex",
         }}>
