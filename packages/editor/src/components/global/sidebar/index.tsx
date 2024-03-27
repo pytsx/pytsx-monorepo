@@ -2,9 +2,9 @@
 
 import React from 'react'
 import { useEditor } from '../../../provider'
-import { SettingsButton } from './settings/settings-button'
 import { Settings } from './settings'
-import { size, createScroll, useTheme } from '@pytsx/ui'
+import { createScroll, useTheme, IconButton } from '@pytsx/ui'
+import { SettingsIcon } from 'lucide-react'
 
 export type SidebarTabs = "settings" | "components"
 
@@ -38,12 +38,14 @@ export const Sidebar = () => {
           style={{
             width: "100%",
             zIndex: 200,
-            padding: theme.sizes.md,
+            padding: theme.sizes.sm,
             borderBottom: theme.borders.muted,
             display: state.editor.previewMode ? "none" : "flex"
           }}
         >
-          <SettingsButton />
+          <IconButton >
+            <SettingsIcon />
+          </IconButton>
         </section>
 
         <section

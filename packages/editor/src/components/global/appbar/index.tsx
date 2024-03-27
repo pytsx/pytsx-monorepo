@@ -9,13 +9,14 @@ import { ChangeDeviceMode } from "./tools/device-mode";
 import { UndoRedo } from "./tools/undo-redo";
 import { AddComponents } from "../add-component";
 import { useEditor } from "../../../provider";
-import { ToggleThemeMode, size, useTheme } from "@pytsx/ui";
+import { Avatar, ToggleThemeMode, size, useTheme } from "@pytsx/ui";
 
 export function Appbar() {
   const { state } = useEditor()
   const { theme } = useTheme()
+
   return (
-    <nav style={{
+    <nav style={{ 
       height: state.editor.liveMode ? "0" : "48px",
       width: "100%",
       position: "relative",
@@ -41,7 +42,10 @@ export function Appbar() {
           {!state.editor.liveMode && <ToggleThemeMode />}
           {!state.editor.liveMode && <UndoRedo />}
           <Preview />
+          {/* <Avatar seed="oi" /> */}
         </span>
+
+
       </div>
     </nav>
   )

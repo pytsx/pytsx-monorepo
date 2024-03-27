@@ -6,3 +6,4 @@ export * from './typography'
 export * from "./select"
 export * from "./tabs"
 export * from "./palette"
+export * from "./avatar"
