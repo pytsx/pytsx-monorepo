@@ -49,10 +49,11 @@ export function Viewer({ content, liveMode }: Props) {
         /* Remove padding for live mode */
           padding: 0,
         } : {
-            padding: theme.sizes.xl,
+            padding: `${theme.sizes["3xl"]} ${theme.sizes.md}`,
             maxHeight: "100%",
             /* Apply device-specific widths */
             maxWidth: getPageDeviceWidth(),
+            width: "100%",
         }),
       }}
     >

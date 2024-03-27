@@ -16,7 +16,7 @@ export function Appbar() {
   const { theme } = useTheme()
   return (
     <nav style={{
-      height: state.editor.liveMode ? "0" : "fit-content",
+      height: state.editor.liveMode ? "0" : "48px",
       width: "100%",
       position: "relative",
       borderBottom: state.editor.liveMode ? "" : theme.borders.muted,

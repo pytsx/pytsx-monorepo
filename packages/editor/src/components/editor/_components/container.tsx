@@ -18,16 +18,17 @@ export function Container({ element }: Props) {
     body: {
       minHeight: "90vh",
       maxHeight: "90vh",
+      width: "100%",
+      margin: "auto",
       overflowY: "auto",
-      paddingBottom: theme.sizes["6xl"],
+      paddingBottom: theme.sizes["3xl"],
       paddingTop: theme.sizes["6xl"],
       ...createScroll()
     },
     bodySelection: {
       margin: "auto auto",
       borderRadius: theme.sizes.sm,
-      border: theme.borders.muted,
-
+      border: theme.borders.primary,
     },
     container: {
       border: theme.borders.primary

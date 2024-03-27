@@ -21,7 +21,7 @@ export function AddComponents() {
           top: "106%",
           border: theme.borders.muted,
           left: "2px",
-          background: theme.palette.gray[200],
+          background: theme.palette.gray[100],
           backdropFilter: "blur(8px)",
           borderRadius: theme.sizes.xs,
           zIndex: 600,

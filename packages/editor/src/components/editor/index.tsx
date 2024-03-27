@@ -41,7 +41,7 @@ export function Editor({ liveMode, content }: Props) {
 
       <Appbar />
 
-      <div style={{ display: "flex" }}>
+      <div style={{ display: "flex", height: state.editor.liveMode ? "auto" : "calc(100vh - 48px)" }}>
         <Viewer content={content} liveMode={!!liveMode} />
         {!state.editor.liveMode && <Sidebar />}
       </div>

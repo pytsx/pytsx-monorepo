@@ -161,6 +161,7 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
           position: "absolute",
           top: '-26px',
           left: "-1px",
+          background: theme.palette.gray[100]
         }}
         disabled={!(isSelectedElement && isEditMode)}
       >

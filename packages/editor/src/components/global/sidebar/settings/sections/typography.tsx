@@ -20,7 +20,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
               borderRadius: theme.sizes.xs,
               padding: theme.sizes.md,
               border: theme.borders.input,
-              background: theme.colors.input,
+              background: theme.colors.card,
               minHeight: "240px",
               color: theme.colors["text-primary"]
             }}
