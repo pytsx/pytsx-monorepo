@@ -7,13 +7,13 @@ import { ITheme, IThemeContext, ModeType } from "./interface"
 import { createTheme } from "../utils"
 
 const ThemeContext = React.createContext<IThemeContext>({
-  mode: "system",
+  mode: "dark",
   setMode: () => { },
-  theme: createTheme("system")
+  theme: createTheme("dark")
 })
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  const [mode, setMode] = React.useState<ModeType>("system")
+  const [mode, setMode] = React.useState<ModeType>("dark")
   const [theme, setTheme] = React.useState<ITheme>(createTheme(mode))
 
   React.useEffect(() => {
@@ -22,8 +22,8 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
 
   return <ThemeContext.Provider value={{ mode, setMode, theme }}>
     <NextThemesProvider
-      attribute="class"
-      defaultTheme="system"
+      attribute="data-*"
+      defaultTheme={mode}
       enableSystem
       disableTransitionOnChange
       {...props}

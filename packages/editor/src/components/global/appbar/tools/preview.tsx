@@ -22,7 +22,7 @@ export function Preview() {
         ...(state.editor.liveMode ? {
           position: "fixed",
           bottom: theme.sizes.sm,
-          right: theme.sizes.xl,
+          right: theme.sizes.md,
           background: theme.colors.primary,
           borderRadius: "50rem",
           padding: theme.sizes.md,

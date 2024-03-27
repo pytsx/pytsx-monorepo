@@ -29,9 +29,7 @@ export function CustomSettings() {
   }
 
   return (
-    <SettingsContainer>
-      <Typography>Custom</Typography>
-      <div className='px-2'>
+    <SettingsContainer label="Custom">
         {state.editor.selectedElement.type === 'link' &&
           !Array.isArray(state.editor.selectedElement.content) && (
             <div className="flex flex-col gap-2">
@@ -43,8 +41,7 @@ export function CustomSettings() {
                 value={state.editor.selectedElement.content.href}
               />
             </div>
-          )}
-      </div>
+        )}
     </SettingsContainer>
   )
 }

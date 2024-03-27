@@ -11,9 +11,7 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
   const { theme } = useTheme()
   return (
 
-    <SettingsContainer >
-      <Typography className="!no-underline">Flexbox</Typography>
-      <div style={{ display: "flex", gap: theme.sizes.sm, flexDirection: "column", width: "100%" }}>
+    <SettingsContainer label="Flexbox">
         <Typography >Justify Content</Typography>
         <Tabs
           onValueChange={(e) =>
@@ -144,10 +142,6 @@ export function FlexboxSettings({ handleOnChanges }: SettingsProps) {
             value={state.editor.selectedElement.styles.flexDirection}
           />
         </div>
-
-
-      </div>
-
 
     </SettingsContainer>
   )

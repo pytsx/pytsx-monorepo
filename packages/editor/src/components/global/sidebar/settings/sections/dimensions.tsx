@@ -11,16 +11,15 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
   const { state } = useEditor()
   const { theme } = useTheme()
   return (
-    <SettingsContainer>
-      <Typography style={{ userSelect: "none" }} >
-        Dimensions
-      </Typography>
-      <div style={{ padding: `0 ${theme.sizes.sm}` }} >
+    <SettingsContainer label="Dimensions">
+
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
-              <div style={{ display: "flex", gap: theme.sizes.sm }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm }}>
+
+            <div style={{ display: "flex", gap: theme.sizes.xs }}>
                 <div>
+
                   <Typography style={{ userSelect: "none" }} >Height</Typography>
                   <Input
                     id="height"
@@ -28,7 +27,9 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
                     onChange={handleOnChanges}
                     value={state.editor.selectedElement.styles.height}
                   />
+
                 </div>
+
                 <div>
                   <Typography style={{ userSelect: "none" }} >Width</Typography>
                   <Input
@@ -123,7 +124,6 @@ export function DimensionsSettings({ handleOnChanges }: SettingsProps) {
 
             />
           </div>
-        </div>
       </div>
     </SettingsContainer>
   )

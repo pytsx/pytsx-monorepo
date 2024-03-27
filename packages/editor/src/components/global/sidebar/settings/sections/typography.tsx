@@ -9,7 +9,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
   const { state, dispatch } = useEditor()
   const { theme } = useTheme()
   return (
-    <SettingsContainer>
+    <SettingsContainer label="text">
       {
         state.editor.selectedElement.content && !Array.isArray(state.editor.selectedElement.content) && (
           <textarea
@@ -45,9 +45,6 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
           />
         )
       }
-      <Typography >
-        Typography
-      </Typography>
       <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm, width: "100%" }}>
         <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm, width: "100%" }}>
           <Typography style={{ userSelect: "none" }}>Text Align</Typography>
@@ -60,7 +57,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
                   value: e,
                 },
               })
-          }>
+            }>
             <SelectTrigger>
               <SelectValue placeholder="text align" />
             </SelectTrigger>
@@ -109,12 +106,12 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
           <Select
             value={state?.editor?.selectedElement?.styles?.fontWeight?.toString() || "normal"}
             onValueChange={(e) =>
-            handleOnChanges({
-              target: {
-                id: 'fontWeight',
-                value: e,
+              handleOnChanges({
+                target: {
+                  id: 'fontWeight',
+                  value: e,
                   },
-            })}>
+              })}>
             <SelectTrigger>
               <SelectValue placeholder="font weight" />
             </SelectTrigger>

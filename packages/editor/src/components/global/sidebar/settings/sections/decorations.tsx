@@ -11,11 +11,8 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
   const { theme } = useTheme()
 
   return (
-    <SettingsContainer>
-      <Typography className="!no-underline">
-        Decorations
-      </Typography>
-      <div style={{ display: "flex", padding: theme.sizes.xs, flexDirection: "column", gap: theme.sizes.sm }}>
+    <SettingsContainer label="Decorations">
+
         <div>
           <span style={{ display: "flex", width: "100%", justifyContent: "space-between" }}>
             <Typography>Opacity</Typography>
@@ -173,7 +170,6 @@ export function DecorationsSettings({ handleOnChanges }: SettingsProps) {
             </div>
           </div>
         </div> */}
-      </div>
     </SettingsContainer>
   )
 }

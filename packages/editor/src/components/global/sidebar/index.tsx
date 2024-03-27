@@ -16,9 +16,9 @@ export const Sidebar = () => {
       style={{
         maxHeight: "95vh",
         height: "100%",
-        width: "320px",
-        minWidth: "320px",
-        maxWidth: "320px",
+        width: "280px",
+        minWidth: "280px",
+        maxWidth: "280px",
         borderLeft: theme.borders.muted,
         background: theme.colors.card,
         zIndex: 500,
@@ -50,31 +50,13 @@ export const Sidebar = () => {
 
         <section
           style={{
-            zIndex: 100,
+            zIndex: 500,
             height: "100%",
             width: "100%",
-            transition: "all 75ms ease-in-out",
             display: state.editor.previewMode ? "none" : "flex",
-            padding: theme.sizes.md,
           }}
         >
-          <div
-            style={{
-              width: "100%",
-              display: "flex",
-              height: "100%"
-            }}
-          >
-            <div style={{
-              gap: theme.sizes.md,
-              display: "flex",
-              flexDirection: "column",
-              width: "100%",
-            }} >
-              <Settings />
-            </div>
-
-          </div>
+          <Settings />
         </section>
 
       </div>

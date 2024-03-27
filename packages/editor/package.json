@@ -1,6 +1,6 @@
 {
   "name": "@pytsx/editor",
-  "version": "0.3.57",
+  "version": "0.3.71",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@pytsx/ui": "^0.0.59",
+    "@pytsx/ui": "^0.0.61",
     "@swc/core": "^1.4.8",
     "@tabler/icons-react": "^3.1.0",
     "clsx": "^2.1.0",

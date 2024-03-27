@@ -2,8 +2,6 @@
 import { Input, Typography, useTheme } from "@pytsx/ui";
 import { LucideIcon, MaximizeIcon, Minimize } from "lucide-react";
 import React from "react";
-import { v4 } from "uuid"
-
 
 interface IInputBase extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string
@@ -57,13 +55,12 @@ export const InputMultifield = React.forwardRef<HTMLInputElement, IInput>((props
         gridTemplateColumns: "repeat(2, 1fr)",
         gridAutoRows: "auto",
         gridAutoFlow: "row dense",
-        rowGap: theme.sizes.xs,
-        columnGap: theme.sizes.sm
+        gap: theme.sizes.xs,
       }}>
         {
           multipleInputs.map(prop => (
             <label htmlFor={prop.id + prop.label} key={prop.id + prop.label}>
-              <Typography style={{ userSelect: "none" }}>{prop.label}</Typography>
+              <Typography style={{ userSelect: "none", fontSize: ".8rem" }}>{prop.label}</Typography>
               <Input autoFocus aria-label={prop.id} key={prop.id + prop.label}  {...prop} />
             </label>
           ))
