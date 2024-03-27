@@ -6,10 +6,45 @@ import { Input, Select, SelectContent, SelectItem, SelectTrigger, SelectValue, T
 import { SettingsContainer } from "./settings-container";
 
 export function TypographySettings({ handleOnChanges }: SettingsProps) {
-  const { state } = useEditor()
+  const { state, dispatch } = useEditor()
   const { theme } = useTheme()
   return (
     <SettingsContainer>
+      {
+        state.editor.selectedElement.content && !Array.isArray(state.editor.selectedElement.content) && (
+          <textarea
+            aria-multiline
+            style={{
+              width: "100%",
+              resize: "vertical",
+              borderRadius: theme.sizes.xs,
+              padding: theme.sizes.md,
+              border: theme.borders.input,
+              background: theme.colors.input,
+              minHeight: "240px",
+              color: theme.colors["text-primary"]
+            }}
+            suppressContentEditableWarning={true}
+            contentEditable={!state.editor.liveMode}
+            autoFocus
+            onChange={(e) => {
+              const innerText = e.target.value || ""
+              dispatch({
+                type: 'UPDATE_ELEMENT',
+                payload: {
+                  elementDetails: {
+                    ...state.editor.selectedElement,
+                    content: {
+                      innerText,
+                    },
+                  },
+                },
+              })
+            }}
+            value={state.editor.selectedElement.content.innerText || ""}
+          />
+        )
+      }
       <Typography >
         Typography
       </Typography>
@@ -17,7 +52,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
         <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm, width: "100%" }}>
           <Typography style={{ userSelect: "none" }}>Text Align</Typography>
           <Select
-            value={state.editor.selectedElement?.styles?.textAlign}
+            value={state.editor.selectedElement?.styles?.textAlign || "left"}
             onValueChange={(e) =>
               handleOnChanges({
                 target: {
@@ -58,16 +93,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
           </Select>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm, width: "100%" }}>
-          <Typography style={{ userSelect: "none" }}>Font Family</Typography>
-          <Input
-            id="DM Sans"
-            onChange={handleOnChanges}
-            value={state.editor.selectedElement.styles.fontFamily}
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
+        <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.xs }}>
           <Typography style={{ userSelect: "none" }}>Color</Typography>
           <Input
             id="color"
@@ -80,10 +106,12 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
 
           <div>
           <Typography style={{ userSelect: "none" }}>Weight</Typography>
-          <Select onValueChange={(e) =>
+          <Select
+            value={state?.editor?.selectedElement?.styles?.fontWeight?.toString() || "normal"}
+            onValueChange={(e) =>
             handleOnChanges({
               target: {
-                id: 'font-weight',
+                id: 'fontWeight',
                 value: e,
                   },
             })}>
@@ -104,7 +132,7 @@ export function TypographySettings({ handleOnChanges }: SettingsProps) {
               placeholder="px"
               id="fontSize"
               onChange={handleOnChanges}
-              value={state.editor.selectedElement.styles.fontSize}
+            value={state.editor.selectedElement.styles.fontSize || "16px"}
           />
         </div>
       </div>

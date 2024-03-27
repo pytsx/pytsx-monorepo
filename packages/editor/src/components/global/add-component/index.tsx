@@ -13,16 +13,15 @@ export function AddComponents() {
       <IconButton onClick={() => setActive(prev => !prev)} >
         <Plus />
       </IconButton>
-
       {
         active && <div style={{
           position: 'absolute',
           width: "fit-content",
           boxSizing: "border-box",
           top: "106%",
-          border: theme.borders.primary,
+          border: theme.borders.muted,
           left: "2px",
-          background: "transparent",
+          background: theme.palette.gray[200],
           backdropFilter: "blur(8px)",
           borderRadius: theme.sizes.xs,
           zIndex: 600,

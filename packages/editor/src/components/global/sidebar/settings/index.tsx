@@ -5,21 +5,15 @@ import { DimensionsSettings } from "./sections/dimensions";
 import { DecorationsSettings } from "./sections/decorations";
 import { FlexboxSettings } from "./sections/flexbox";
 import { TypographySettings } from "./sections/typography";
+import { useTheme } from "@pytsx/ui";
 
 export function Settings() {
   const { state, dispatch } = useEditor()
+  const { theme } = useTheme()
 
   const handleOnChanges = (e: any) => {
     const styleSettings: string = e.target.id
     let value: string = e.target.value
-
-    const pxInputs = ["margin", "padding", "height", "width", "top", "left", "right", "bottom"]
-    const pxLabel = ["p", "px", "ppx", "pxx", "x"]
-    if (pxInputs.includes(styleSettings)) {
-      if (!pxLabel.includes(value)) {
-        value = value.concat("px")
-      }
-    }
 
     const styleObject = {
       [styleSettings]: value,
@@ -39,7 +33,7 @@ export function Settings() {
   }
 
   return (
-    <>
+    <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.md }}>
       {state.editor.selectedElement.type !== "text" ? (
         <>
           <DimensionsSettings handleOnChanges={handleOnChanges} />
@@ -49,6 +43,6 @@ export function Settings() {
       ) : (
         <TypographySettings handleOnChanges={handleOnChanges} />
       )}
-    </>
+    </div>
   )
 }

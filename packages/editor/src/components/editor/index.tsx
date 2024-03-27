@@ -7,7 +7,7 @@ import { Viewer } from "./_components";
 import { useEditor } from "../../provider";
 import { Sidebar } from "../global/sidebar";
 import { Appbar } from "../global";
-import { createScroll, useTheme } from "@pytsx/ui"
+import { createScroll, useTheme, Palette } from "@pytsx/ui"
 
 type Props = {
   liveMode?: boolean
@@ -38,6 +38,7 @@ export function Editor({ liveMode, content }: Props) {
         ...createScroll()
       }}>
       <span id="editor" />
+
       <Appbar />
 
       <div style={{ display: "flex" }}>

@@ -1,7 +1,7 @@
 "use client"
 import { EditorElement, useEditor } from "../../../provider"
 import React from "react"
-import { Typography } from "@pytsx/ui"
+import { Typography, useTheme } from "@pytsx/ui"
 import { SelectionBox } from "./selection-box"
 
 type Props = {
@@ -17,25 +17,7 @@ export function Text({ element }: Props) {
       style={{ width: "100%" }}
       disableOnDrop 
     >
-      <Typography
-        style={styles}
-        contentEditable={!state.editor.liveMode}
-        onBlur={(e) => {
-          const spanElement = e.target as HTMLSpanElement
-          const innerText = spanElement.innerHTML.trim() == "" ? "novo texto" : spanElement.innerHTML
-          dispatch({
-            type: 'UPDATE_ELEMENT',
-            payload: {
-              elementDetails: {
-                ...element,
-                content: {
-                  innerText,
-                },
-              },
-            },
-          })
-        }}
-      >
+      <Typography style={styles}>
         {!Array.isArray(content) &&
           content?.innerText || ""
         }

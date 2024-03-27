@@ -50,7 +50,7 @@ export function Container({ element }: Props) {
       <div style={{
         ...styles,
         ...(isEditMode && isBody && editMode.body),
-        borderRadius: isEditMode && isSelectedElement ? theme.sizes.xs : styles.borderRadius || "" 
+        borderRadius: isEditMode && isSelectedElement && !styles.borderRadius ? theme.sizes.xs : styles.borderRadius || "" 
       }}>
       {
         Array.isArray(content) &&

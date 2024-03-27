@@ -83,27 +83,12 @@ export const moveElement = (
       // Criar uma cópia do conteúdo para modificação
       const newContent = [...item.content];
 
-
       if (direction === 'up' && item.content[prevIndex] && item.content[indexToMove].position > 0) {
-        const oldPosition = indexToMove
-        const newPosition = oldPosition - 1
-
-        newContent[prevIndex].position = oldPosition;
-        newContent[indexToMove].position = newPosition;
-        console.log("UP",
-          "old position: ", oldPosition,
-          "new position: ", newPosition
-        )
+        newContent[prevIndex].position = indexToMove;
+        newContent[indexToMove].position = indexToMove - 1;
       } else if (direction === 'down' && item.content[nextIndex]) {
-        const oldPosition = indexToMove;
-        const newPosition = oldPosition + 1
-
-        newContent[nextIndex].position = oldPosition
-        newContent[indexToMove].position = newPosition;
-        console.log("DOWN",
-          "old position: ", oldPosition,
-          "new position: ", newPosition
-        )
+        newContent[nextIndex].position = indexToMove
+        newContent[indexToMove].position = indexToMove + 1;
       }
 
       return { ...item, content: newContent };

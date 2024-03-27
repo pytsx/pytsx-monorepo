@@ -1,61 +1,74 @@
 "use client"
 import { Input, Typography, useTheme } from "@pytsx/ui";
+import { LucideIcon, MaximizeIcon, Minimize } from "lucide-react";
 import React from "react";
+import { v4 } from "uuid"
 
-interface IInput extends React.InputHTMLAttributes<HTMLInputElement> {
+
+interface IInputBase extends React.InputHTMLAttributes<HTMLInputElement> {
   label: string
-  partialInputs: {
+}
 
-  }
+interface IInput {
+  label: string
+  mainInput: IInputBase
+  multipleInputs: IInputBase[]
 }
 
 
 export const InputMultifield = React.forwardRef<HTMLInputElement, IInput>((props, ref) => {
-  const { label } = props
+  const { label, mainInput, multipleInputs } = props
   const { theme } = useTheme()
 
+  const [open, setOpen] = React.useState<boolean>(false)
+
+  const Icon: LucideIcon = {
+    mazimize: MaximizeIcon,
+    minimize: Minimize
+  }[open ? "minimize" : "mazimize"]
+
   return (
-    <>
-      <Typography >{label}</Typography>
-      {/* 
-      <div style={{ display: "flex", flexDirection: "column", gap: theme.sizes.sm }}>
-        <div style={{ display: "flex", gap: theme.sizes.sm }}>
-          <div>
-            <Typography >Top</Typography>
-            <Input
-              id="marginTop"
-              placeholder="0"
-              value={state.editor.selectedElement.styles.marginTop}
-            />
-          </div>
-          <div>
-            <Typography >Bottom</Typography>
-            <Input
-              placeholder="0"
-              id="marginBottom"
-              value={state.editor.selectedElement.styles.marginBottom}
-            />
-          </div>
-        </div>
-        <div style={{ display: "flex", gap: theme.sizes.sm }}>
-          <div>
-            <Typography >Left</Typography>
-            <Input
-              placeholder="0"
-              id="marginLeft"
-              value={state.editor.selectedElement.styles.marginLeft}
-            />
-          </div>
-          <div>
-            <Typography >Right</Typography>
-            <Input
-              placeholder="0"
-              id="marginRight"
-              value={state.editor.selectedElement.styles.marginRight}
-            />
-          </div>
-        </div>
-      </div> */}
-    </>
+    <div style={{
+      display: "flex",
+      flexDirection: "column",
+      gap: theme.sizes.xs,
+    }}>
+      <div style={{
+        display: "flex",
+        gap: theme.sizes.sm,
+        justifyContent: "space-between",
+        alignItems: "center",
+        width: "100%",
+      }}>
+        <Typography style={{ userSelect: "none", textTransform: "capitalize" }}>{label}</Typography>
+        <Icon
+          onClick={() => setOpen(prev => !prev)}
+          style={{
+            width: theme.spacing[6],
+            height: theme.spacing[6],
+            color: theme.colors["text-primary"],
+            cursor: "pointer"
+          }}
+        />
+      </div>
+      {!open && <Input  {...mainInput} />}
+      {open && <div style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(2, 1fr)",
+        gridAutoRows: "auto",
+        gridAutoFlow: "row dense",
+        rowGap: theme.sizes.xs,
+        columnGap: theme.sizes.sm
+      }}>
+        {
+          multipleInputs.map(prop => (
+            <label htmlFor={prop.id + prop.label} key={prop.id + prop.label}>
+              <Typography style={{ userSelect: "none" }}>{prop.label}</Typography>
+              <Input autoFocus aria-label={prop.id} key={prop.id + prop.label}  {...prop} />
+            </label>
+          ))
+        }
+      </div>}
+    </div>
   )
 })
