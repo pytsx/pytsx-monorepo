@@ -1,6 +1,6 @@
 {
   "name": "@pytsx/editor",
-  "version": "0.3.125",
+  "version": "0.3.145",
   "description": "",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

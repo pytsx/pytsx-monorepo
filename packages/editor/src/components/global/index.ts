@@ -1,3 +1,3 @@
 export * from "./appbar"
-export * from "./sidebar"
+export * from "./sidebar/settings"
 export * from "./viewer"

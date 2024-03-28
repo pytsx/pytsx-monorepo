@@ -16,16 +16,17 @@ export function Container({ element }: Props) {
 
   const editMode: Record<string, React.CSSProperties> = {
     body: {
-      minHeight: "90vh",
-      maxHeight: "90vh",
+      height: "100%",
+      minHeight: "95vh",
       width: "100%",
       margin: "auto",
       overflowY: "auto",
-      paddingBottom: theme.sizes["3xl"],
-      paddingTop: theme.sizes["6xl"],
+      paddingTop: theme.sizes["3xl"],
+      paddingBottom: theme.sizes["6xl"],
       ...createScroll()
     },
     bodySelection: {
+      height: "100%",
       margin: "auto auto",
       borderRadius: theme.sizes["2xs"],
       boxShadow: `0 0 0 1px ${theme.colors.muted}`,
@@ -52,6 +53,8 @@ export function Container({ element }: Props) {
       <div style={{
         ...styles,
         ...(isEditMode && isBody && editMode.body),
+        ...(!isEditMode && isBody && {
+        })
       }}>
       {
         Array.isArray(content) &&

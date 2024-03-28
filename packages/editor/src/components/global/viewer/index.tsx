@@ -43,14 +43,15 @@ export function Viewer({ content, liveMode }: Props) {
         /* Center when not in preview/live modes */
         marginLeft: "auto",
         marginRight: "auto",
+        minHeight: "calc(100vh - 48px)",
         width: "100%",
-        height: "100%",
         ...(state.editor.liveMode ? {
-        /* Remove padding for live mode */
+          /* Remove padding for live mode */
           padding: 0,
         } : {
-            padding: `${theme.sizes["3xl"]} ${theme.sizes.md}`,
-            maxHeight: "100%",
+            padding: theme.sizes.sm,
+            maxHeight: "calc(100vh - 48px)",
+            height: "100%",
             /* Apply device-specific widths */
             maxWidth: getPageDeviceWidth(),
             width: "100%",
