@@ -16,15 +16,16 @@ export const Sidebar = () => {
       style={{
         maxHeight: "95vh",
         height: "100%",
-        width: "280px",
-        minWidth: "280px",
-        maxWidth: "280px",
+        width: "264px",
+        minWidth: "264px",
+        maxWidth: "264px",
         borderLeft: theme.borders.muted,
         background: theme.colors.card,
         zIndex: 500,
         overflowY: "auto",
         overflowX: "hidden",
         paddingBottom: theme.sizes['6xl'],
+        fontSize: ".8rem !important",
         ...createScroll(),
       }}
     >

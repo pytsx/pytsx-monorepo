@@ -17,7 +17,7 @@ export function SettingsContainer({ children, label, actions }: Props) {
       }}>
       <div style={{
         width: "100%",
-        padding: `${theme.sizes.lg} ${theme.sizes.md}`,
+        padding: `${theme.sizes.md} ${theme.sizes.lg}`,
         display: "flex",
         flexDirection: "column",
         gap: theme.sizes.md,
