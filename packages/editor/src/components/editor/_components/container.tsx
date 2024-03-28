@@ -27,11 +27,12 @@ export function Container({ element }: Props) {
     },
     bodySelection: {
       margin: "auto auto",
-      borderRadius: theme.sizes.sm,
-      border: theme.borders.primary,
+      borderRadius: theme.sizes["2xs"],
+      boxShadow: `0 0 0 1px ${theme.colors.muted}`,
+      background: theme.colors.card
     },
     container: {
-      border: theme.borders.primary
+      border: theme.borders.muted
     }
   }
 
@@ -51,7 +52,6 @@ export function Container({ element }: Props) {
       <div style={{
         ...styles,
         ...(isEditMode && isBody && editMode.body),
-        borderRadius: isEditMode && isSelectedElement && !styles.borderRadius ? theme.sizes.xs : styles.borderRadius || "" 
       }}>
       {
         Array.isArray(content) &&

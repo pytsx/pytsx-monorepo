@@ -7,10 +7,10 @@ type Props = {
   children: React.ReactNode
   style?: React.CSSProperties
   disabled?: boolean
+  dense?: boolean
 }
-export function Badge({ children, style, disabled }: Props) {
+export function Badge({ children, style, disabled, dense }: Props) {
   const { theme } = useTheme()
-  const { xs, md } = theme.sizes
 
   const customStyle = {
     ...style,
@@ -22,10 +22,10 @@ export function Badge({ children, style, disabled }: Props) {
   return (
     <Typography
       style={{
-        borderRadius: xs,
-        border: theme.borders.primary,
+        borderRadius: theme.sizes["2xs"],
+        border: theme.borders.muted,
         fontSize: "smaller",
-        padding: `0 ${md}`,
+        padding: dense ? `0 ${theme.sizes.sm}` : `0 ${theme.sizes.md}`,
         ...customStyle,
         background: "trasparent",
         backdropFilter: "blur(8px)",

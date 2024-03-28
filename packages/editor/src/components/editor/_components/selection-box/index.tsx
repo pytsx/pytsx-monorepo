@@ -16,7 +16,7 @@ type Props = {
 
 export function SelectionBox({ element, style: selectionBoxStyles, children, disableOnDrop }: Props) {
   const { state, dispatch } = useEditor()
-  const { id, name, content } = element
+  const { id, name, content, type } = element
   const { theme } = useTheme()
 
   const defaultStyles: React.CSSProperties = {
@@ -135,16 +135,18 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
 
   const selectedElement = state.editor.selectedElement
   const isSelectedElement = selectedElement.id === id
-  const isSelectedElementBody = selectedElement.type === '__body'
+  const isSelectedElementBody = type === '__body'
 
   return (
     <div
       style={{
         position: "relative",
         ...(isEditMode && (
-          isSelectedElement ? {
-            border: theme.borders.primary,
-            borderRadius: theme.sizes.xs,
+          isSelectedElement
+            && !isSelectedElementBody
+            ? {
+              border: theme.borders.muted,
+              borderRadius: theme.sizes["2xs"]
           } : {
             border: "1px solid transparent",
           }
@@ -156,27 +158,35 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
       draggable={false}
       onClick={handleOnClickBody}
     >
-      <Badge
-        style={{
-          position: "absolute",
-          top: '-26px',
-          left: "-1px",
-          background: theme.palette.gray[100]
-        }}
-        disabled={!(isSelectedElement && isEditMode)}
-      >
-        {name} #{element.position || 0}
-      </Badge>
+      {
+        isSelectedElement && isEditMode && !isSelectedElementBody &&
+        <span
+          style={{
+            position: "absolute",
+            top: '-26px',
+            left: "-1px",
+              display: "flex",
+              gap: theme.sizes["2xs"],
+            }}
+          >
+            <Badge dense>
+              {element.position || 0}
+            </Badge>
+          <Badge>
+            {name}
+          </Badge>
+        </span>
+      }
 
       {isSelectedElement && isEditMode && !isSelectedElementBody && (
         <nav style={{
           position: "absolute",
           right: theme.sizes.sm,
           top: `-${theme.sizes.lg}`,
-          border: theme.borders.primary,
+          border: theme.borders.muted,
           background: "transparent",
           backdropFilter: "blur(8px)",
-          borderRadius: theme.sizes.xs,
+          borderRadius: theme.sizes["2xs"],
           padding: `${theme.sizes.xs} ${theme.sizes.sm}`,
           display: "flex",
           gap: theme.sizes.xs,
@@ -188,7 +198,16 @@ export function SelectionBox({ element, style: selectionBoxStyles, children, dis
           <MoveElement element={element} />
         </nav>
       )}
+
+      <div style={{
+        ...(isEditMode && isSelectedElement && {
+          overflow: "hidden",
+          borderRadius: theme.sizes["2xs"]
+        })
+      }}>
+
       {children}
+      </div>
     </div>
   )
 }
